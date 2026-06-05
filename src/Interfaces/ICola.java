@@ -1,3 +1,5 @@
+package Interfaces;
+
 public interface ICola<T extends Comparable<T>> {
     void encolar(T elemento);
     T desencolar();

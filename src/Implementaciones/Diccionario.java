@@ -1,3 +1,7 @@
+package Implementaciones;
+
+import Interfaces.IDiccionario;
+
 public class Diccionario<K extends Comparable<K>, V extends Comparable<V>> implements IDiccionario<K, V> {
 
     // Clase interna para manejar los pares clave-valor

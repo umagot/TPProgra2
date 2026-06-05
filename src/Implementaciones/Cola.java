@@ -1,3 +1,7 @@
+package Implementaciones;
+
+import Interfaces.ICola;
+
 public class Cola<T extends Comparable<T>> implements ICola<T> {
     private T[] datos;
     private int fin;
@@ -27,7 +31,7 @@ public class Cola<T extends Comparable<T>> implements ICola<T> {
     @Override
     public void encolar(T elemento) {
         if (estaLlena()){
-            System.out.println("Cola llena");
+            System.out.println("Implementaciones.Cola llena");
         } else {
             datos[fin] = elemento;
             fin++;
