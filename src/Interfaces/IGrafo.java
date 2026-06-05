@@ -18,5 +18,7 @@ public interface IGrafo <T> {
 
         void mostrarUsuarios();
 //        public void bfs();
-        int dfs();
+//        public void dfs();
+
+        void BuscarGenteEnComun();
 }
