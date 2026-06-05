@@ -1,20 +1,20 @@
 public interface IGrafo <T> {
 
-        void insertarVertice(T vertice);
+        void insertarUsuario(T usuario);
 
-        void eliminarVertice(T vertice);
+        void eliminarUsuario(T usuario);
 
-        void insertarArista(T origen, T destino);
+        void insertarRelacion(T origen, T destino);
 
-        void eliminarArista(T origen, T destino);
+        void eliminarRelacion(T origen, T destino);
 
-        boolean existeVertice(T vertice);
+        boolean existeUsuario(T usuario);
 
-        boolean existeArista(T origen, T destino);
+        boolean existeRelacion(T origen, T destino);
 
         void mostrarMatriz();
 
-        void mostrarVertices();
+        void mostrarUsuarios();
 //        public void bfs();
 //        public void dfs();
 }
