@@ -1,6 +1,6 @@
 public class GrafoMatrizAdyacencia<T> implements IGrafo<T> {
 
-    private T[] vertices;
+    private T[] usuarios;
     private int[][] matriz;
     private int cantidad;
     private int capacidad;
@@ -13,34 +13,34 @@ public class GrafoMatrizAdyacencia<T> implements IGrafo<T> {
         this.dirigido = dirigido;
         this.cantidad = 0;
 
-        this.vertices = (T[]) new Object[capacidad];
+        this.usuarios = (T[]) new Object[capacidad];
         this.matriz = new int[capacidad][capacidad];
     }
 
     @Override
-    public void insertarVertice(T vertice) {
+    public void insertarUsuario(T usuario) {
         if (cantidad == capacidad) {
-            System.out.println("No se pueden insertar más vértices.");
+            System.out.println("No se pueden insertar más usuarios.");
             return;
         }
 
-        if (existeVertice(vertice)) {
+        if (existeUsuario(usuario)) {
             System.out.println("El vértice ya existe.");
             return;
         }
 
-        vertices[cantidad] = vertice;
+        usuarios[cantidad] = usuarios;
         cantidad++;
     }
 
     @Override
-    public boolean existeVertice(T vertice) {
-        return obtenerIndice(vertice) != -1;
+    public boolean existeUsuario(T usuario) {
+        return obtenerIndice(usuario) != -1;
     }
 
-    private int obtenerIndice(T vertice) {
+    private int obtenerIndice(T usuario) {
         for (int i = 0; i < cantidad; i++) {
-            if (vertices[i].equals(vertice)) {
+            if (usuarios[i].equals(usuario)) {
                 return i;
             }
         }
@@ -48,12 +48,12 @@ public class GrafoMatrizAdyacencia<T> implements IGrafo<T> {
     }
 
     @Override
-    public void insertarArista(T origen, T destino) {
+    public void insertarRelacion(T origen, T destino) {
         int posOrigen = obtenerIndice(origen);
         int posDestino = obtenerIndice(destino);
 
         if (posOrigen == -1 || posDestino == -1) {
-            System.out.println("Uno de los vértices no existe.");
+            System.out.println("Uno de los usuarios no existe.");
             return;
         }
 
@@ -65,12 +65,12 @@ public class GrafoMatrizAdyacencia<T> implements IGrafo<T> {
     }
 
     @Override
-    public void eliminarArista(T origen, T destino) {
+    public void eliminarRelacion(T origen, T destino) {
         int posOrigen = obtenerIndice(origen);
         int posDestino = obtenerIndice(destino);
 
         if (posOrigen == -1 || posDestino == -1) {
-            System.out.println("Uno de los vértices no existe.");
+            System.out.println("Uno de los usuarios no existe.");
             return;
         }
 
@@ -82,7 +82,7 @@ public class GrafoMatrizAdyacencia<T> implements IGrafo<T> {
     }
 
     @Override
-    public boolean existeArista(T origen, T destino) {
+    public boolean existeRelacion(T origen, T destino) {
         int posOrigen = obtenerIndice(origen);
         int posDestino = obtenerIndice(destino);
 
@@ -94,16 +94,16 @@ public class GrafoMatrizAdyacencia<T> implements IGrafo<T> {
     }
 
     @Override
-    public void eliminarVertice(T vertice) {
-        int pos = obtenerIndice(vertice);
+    public void eliminarUsuario(T usuario) {
+        int pos = obtenerIndice(usuario);
 
         if (pos == -1) {
-            System.out.println("El vértice no existe.");
+            System.out.println("El usuario no existe.");
             return;
         }
 
         for (int i = pos; i < cantidad - 1; i++) {
-            vertices[i] = vertices[i + 1];
+            usuarios[i] = usuario[i + 1];
         }
 
         for (int i = pos; i < cantidad - 1; i++) {
@@ -120,7 +120,7 @@ public class GrafoMatrizAdyacencia<T> implements IGrafo<T> {
 
         cantidad--;
 
-        vertices[cantidad] = null;
+        usuarios[cantidad] = null;
 
         for (int i = 0; i < capacidad; i++) {
             matriz[cantidad][i] = 0;
@@ -129,11 +129,11 @@ public class GrafoMatrizAdyacencia<T> implements IGrafo<T> {
     }
 
     @Override
-    public void mostrarVertices() {
-        System.out.println("Vértices:");
+    public void mostrarUsuarios() {
+        System.out.println("Usuarios:");
 
         for (int i = 0; i < cantidad; i++) {
-            System.out.print(vertices[i] + " ");
+            System.out.print(usuarios[i] + " ");
         }
 
         System.out.println();
@@ -148,13 +148,13 @@ public class GrafoMatrizAdyacencia<T> implements IGrafo<T> {
         System.out.print("   ");
 
         for (int i = 0; i < cantidad; i++) {
-            System.out.print(vertices[i] + " ");
+            System.out.print(usuarios[i] + " ");
         }
 
         System.out.println();
 
         for (int i = 0; i < cantidad; i++) {
-            System.out.print(vertices[i] + "  ");
+            System.out.print(usuarios[i] + "  ");
 
             for (int j = 0; j < cantidad; j++) {
                 System.out.print(matriz[i][j] + " ");
@@ -163,6 +163,5 @@ public class GrafoMatrizAdyacencia<T> implements IGrafo<T> {
             System.out.println();
         }
     }
-    /// / bfs
 
 }
