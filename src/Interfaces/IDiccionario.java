@@ -1,3 +1,5 @@
+package Interfaces;
+
 public interface IDiccionario<K extends Comparable<K>, V extends Comparable<V>> {
     boolean EsVacio();
     void insertar(K clave, V valor);

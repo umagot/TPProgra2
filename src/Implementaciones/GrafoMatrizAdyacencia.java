@@ -1,3 +1,7 @@
+package Implementaciones;
+
+import Interfaces.IGrafo;
+
 public class GrafoMatrizAdyacencia<T> implements IGrafo<T> {
 
     private T[] usuarios;

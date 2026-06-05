@@ -1,3 +1,5 @@
+package Interfaces;
+
 public interface IGrafo <T> {
 
         void insertarUsuario(T usuario);
