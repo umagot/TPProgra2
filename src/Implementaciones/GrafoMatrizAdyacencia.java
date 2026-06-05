@@ -165,5 +165,32 @@ public class GrafoMatrizAdyacencia<T> implements IGrafo<T> {
         }
     }
 
+    public ListaDoble recomendarAmigos(T usuario) {
+
+        ListaDoble recomendaciones = new ListaDoble();
+        int origen = obtenerIndice(usuario);
+        if (origen == -1) {
+            return recomendaciones;
+        }
+        boolean[] visitados = new boolean[cantidad];
+        Cola<Integer> cola = new Cola<>(cantidad);
+        visitados[origen] = true;
+        cola.encolar(origen);
+        while (!cola.estaVacia()) {
+            int actual = cola.desencolar();
+            for (int i = 0; i < cantidad; i++) {
+                if (matriz[actual][i] == 1 && !visitados[i]) {
+                    visitados[i] = true;
+                    cola.encolar(i);
+
+                    if (i != origen && matriz[origen][i] == 0) {
+                        recomendaciones.insertarFinal(i);
+                    }
+                }
+            }
+        }
+
+        return recomendaciones;
+    }
 
 }

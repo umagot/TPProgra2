@@ -17,7 +17,9 @@ public interface IGrafo <T> {
         void mostrarMatriz();
 
         void mostrarUsuarios();
-//        public void bfs();
-//        public void dfs();
+
+        void bfs(T usuario);
+
+
 
 }
