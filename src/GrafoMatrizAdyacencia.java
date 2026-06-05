@@ -139,7 +139,10 @@ public class GrafoMatrizAdyacencia<T> implements IGrafo<T> {
         System.out.println();
     }
 
+    @Override
+    public void BuscarGenteEnComun(){
 
+    }
 
     @Override
     public void mostrarMatriz() {
