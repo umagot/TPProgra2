@@ -165,5 +165,28 @@ public class GrafoMatrizAdyacencia<T> implements IGrafo<T> {
         }
     }
 
+    public void bfs(T usuario) {
+
+        int origen = obtenerIndice(usuario);
+        if (origen == -1) {
+            System.out.println("Usuario no encontrado");
+            return;
+        }
+        boolean[] visitados = new boolean[cantidad];
+        Cola<Integer> cola = new Cola<>(cantidad);
+        visitados[origen] = true;
+        cola.encolar(origen);
+        while (!cola.estaVacia()) {
+            int actual = cola.desencolar();
+            System.out.println(usuarios[actual]);
+            for (int i = 0; i < cantidad; i++) {
+                if (matriz[actual][i] == 1 && !visitados[i]) {
+                    visitados[i] = true;
+                    cola.encolar(i);
+                }
+            }
+        }
+    }
+
 
 }
