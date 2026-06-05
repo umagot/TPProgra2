@@ -1,3 +1,4 @@
+package src;
 public class PerfilUsuario {
     String id;
     String nombre;
