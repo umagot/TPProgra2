@@ -7,6 +7,7 @@ public class GrafoMatrizAdyacencia<T> implements IGrafo<T> {
     private boolean dirigido;
 
 
+
     public GrafoMatrizAdyacencia(int capacidad, boolean dirigido) {
         this.capacidad = capacidad;
         this.dirigido = dirigido;
@@ -137,7 +138,6 @@ public class GrafoMatrizAdyacencia<T> implements IGrafo<T> {
 
         System.out.println();
     }
-
 
     @Override
     public void mostrarMatriz() {
