@@ -20,5 +20,4 @@ public interface IGrafo <T> {
 //        public void bfs();
 //        public void dfs();
 
-        void BuscarGenteEnComun();
 }

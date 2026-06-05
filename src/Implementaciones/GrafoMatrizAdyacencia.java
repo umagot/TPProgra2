@@ -165,10 +165,5 @@ public class GrafoMatrizAdyacencia<T> implements IGrafo<T> {
         }
     }
 
-    @Override
-    public int dfs(){
-
-        return -1;
-    }
 
 }
