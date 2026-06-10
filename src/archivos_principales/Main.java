@@ -6,52 +6,65 @@ import Interfaces.*;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+// 1. Crear el grafo (Capacidad para 5 personas, falso = No Dirigido)
+        IGrafo redSocial = new GrafoMatrizAdyacencia(5, false);
 
-        IGrafo red = new GrafoMatrizAdyacencia(8, false);
+        // 2. Crear usuarios con IDs únicos
+        Usuario juan = new Usuario("Juan", 1, "juan@mail.com");
+        Usuario maria = new Usuario("Maria", 2, "maria@mail.com");
+        Usuario pedro = new Usuario("Pedro", 3, "pedro@mail.com");
+        Usuario ana = new Usuario("Ana", 4, "ana@mail.com");
+        Usuario lucas = new Usuario("Lucas", 5, "lucas@mail.com");
 
-        Usuario uAna = new Usuario("Ana");
-        Usuario uBruno = new Usuario("Bruno");
-        Usuario uCarlos = new Usuario("Carlos");
-        Usuario uDiana = new Usuario("Diana");
-        Usuario uElena = new Usuario("Elena");
-        Usuario uFede = new Usuario("Fede");
-        Usuario uGabi = new Usuario("Gabi");
+        System.out.println("--- 1. Insertando Usuarios ---");
+        redSocial.insertarVertice(juan);
+        redSocial.insertarVertice(maria);
+        redSocial.insertarVertice(pedro);
+        redSocial.insertarVertice(ana);
+        redSocial.insertarVertice(lucas);
 
-        red.insertarVertice(uAna);
-        red.insertarVertice(uBruno);
-        red.insertarVertice(uCarlos);
-        red.insertarVertice(uDiana);
-        red.insertarVertice(uElena);
-        red.insertarVertice(uFede);
-        red.insertarVertice(uGabi);
+        // Intento de duplicado (para probar validación)
+        redSocial.insertarVertice(juan);
 
-        red.insertarArista(uAna, uBruno);
-        red.insertarArista(uAna, uCarlos);
-        red.insertarArista(uBruno, uDiana);
-        red.insertarArista(uCarlos, uDiana);
-        red.insertarArista(uDiana, uElena);
-        red.insertarArista(uElena, uFede);
-
-        System.out.println("--- ESTADO INICIAL DE LA RED ---");
-        red.mostrarVertices();
+        redSocial.mostrarVertices();
         System.out.println();
-        red.mostrarMatriz();
-        System.out.println("\n-------------------------------------------------\n");
 
-        System.out.println("--- PRUEBA 1: ALCANCE DE LA RED (DFS) ---");
-        red.dfsAlcance(uAna);
+        System.out.println("--- 2. Creando Conexiones (Aristas) ---");
+        // Juan es amigo de Maria y Pedro
+        redSocial.insertarArista(juan, maria);
+        redSocial.insertarArista(juan, pedro);
 
-        System.out.println("\n-------------------------------------------------\n");
+        // Maria es amiga de Ana
+        redSocial.insertarArista(maria, ana);
 
-        System.out.println("--- PRUEBA 2: CERCANÍA Y NIVELES (BFS) ---");
-        red.bfsNiveles(uAna);
+        // Pedro es amigo de Ana
+        redSocial.insertarArista(pedro, ana);
 
-        System.out.println("\n-------------------------------------------------\n");
+        // Lucas queda aislado por ahora
 
-        System.out.println("--- PRUEBA 3: MOTOR DE RECOMENDACIONES ---");
-        red.recomendarAmigos(uAna);
-
+        redSocial.mostrarMatriz();
         System.out.println();
-        red.recomendarAmigos(uDiana);
+
+        System.out.println("--- 3. Probando Recorrido DFS (Alcance) ---");
+        // Debería alcanzar a Juan, Maria, Ana y Pedro (Lucas no)
+        redSocial.dfsAlcance(juan);
+        System.out.println();
+
+        System.out.println("--- 4. Probando Recorrido BFS (Niveles) ---");
+        // Debería mostrar: Nivel 1 a Maria/Pedro, Nivel 2 a Ana
+        redSocial.bfsNiveles(juan);
+        System.out.println();
+
+        System.out.println("--- 5. Probando Recomendaciones de Amistad ---");
+        // Juan es amigo de Maria y Pedro. Maria y Pedro son amigos de Ana.
+        // A Juan se le debería recomendar a Ana (Amigo de amigo / Nivel 2)
+        redSocial.recomendarAmigos(juan);
+        System.out.println();
+
+        System.out.println("--- 6. Eliminando un Vértice (Pedro) ---");
+        redSocial.eliminarVertice(pedro);
+
+        redSocial.mostrarVertices();
+        redSocial.mostrarMatriz();
     }
 }
