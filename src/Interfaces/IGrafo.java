@@ -1,25 +1,19 @@
 package Interfaces;
+import archivos_principales.Usuario;
 
-public interface IGrafo <T> {
 
-        void insertarUsuario(T usuario);
+public interface IGrafo {
 
-        void eliminarUsuario(T usuario);
-
-        void insertarRelacion(T origen, T destino);
-
-        void eliminarRelacion(T origen, T destino);
-
-        boolean existeUsuario(T usuario);
-
-        boolean existeRelacion(T origen, T destino);
-
+        void insertarVertice(Usuario vertice);
+        void eliminarVertice(Usuario vertice);
+        void insertarArista(Usuario origen, Usuario destino);
+        void eliminarArista(Usuario origen, Usuario destino);
+        boolean existeVertice(Usuario vertice);
+        boolean existeArista(Usuario origen, Usuario destino);
         void mostrarMatriz();
+        void mostrarVertices();
 
-        void mostrarUsuarios();
-
-        void bfs(T usuario);
-
-
-
+        void dfsAlcance(Usuario usuario);
+        void bfsNiveles(Usuario usuario);
+        void recomendarAmigos(Usuario usuario);
 }
