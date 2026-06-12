@@ -1,13 +1,15 @@
 package Interfaces;
 
-public interface IDiccionario<K extends Comparable<K>, V extends Comparable<V>> {
+public interface IDiccionario<ID extends Comparable<ID>, Nombre extends Comparable<Nombre>> {
     boolean EsVacio();
-    void insertar(K clave, V valor);
-    void eliminar(K clave);
-    V valor(K clave); // Cambiado a devolver 'V' en vez de String
-    boolean pertenece(K clave);
-    void modificar(K clave, V nuevoValor);
+    void insertar(ID id, Nombre nombre);
+    void eliminar(ID id);
+    Nombre nombre(ID id);
+    ID id(Nombre nombre);
+    boolean perteneceId(ID id);
+    boolean perteneceNombre(Nombre nombre);
+    void modificar(ID id, Nombre nuevoNombre);
     int tamanio();
-    K[] listarClaves();
-    V[] listarValores();
+    ID[] listarIds();
+    Nombre[] listarNombres();
 }
