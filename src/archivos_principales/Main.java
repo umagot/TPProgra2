@@ -2,11 +2,9 @@ package archivos_principales;
 import Implementaciones.*;
 import Interfaces.*;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-// 1. Crear el grafo (Capacidad para 5 personas, falso = No Dirigido)
+        // 1. Crear el grafo (Capacidad para 5 personas, falso = No Dirigido)
         IGrafo redSocial = new GrafoMatrizAdyacencia(5, false);
 
         // 2. Crear usuarios con IDs únicos
@@ -16,7 +14,7 @@ public class Main {
         Usuario ana = new Usuario("Ana", 4, "ana@mail.com");
         Usuario lucas = new Usuario("Lucas", 5, "lucas@mail.com");
 
-        System.out.println("--- 1. Insertando Usuarios ---");
+        System.out.println(" --- 1. Insertando Usuarios ---");
         redSocial.insertarVertice(juan);
         redSocial.insertarVertice(maria);
         redSocial.insertarVertice(pedro);
@@ -29,7 +27,7 @@ public class Main {
         redSocial.mostrarVertices();
         System.out.println();
 
-        System.out.println("--- 2. Creando Conexiones (Aristas) ---");
+        System.out.println("--- 2. Creando Conexiones ---");
         // Juan es amigo de Maria y Pedro
         redSocial.insertarArista(juan, maria);
         redSocial.insertarArista(juan, pedro);
@@ -45,12 +43,12 @@ public class Main {
         redSocial.mostrarMatriz();
         System.out.println();
 
-        System.out.println("--- 3. Probando Recorrido DFS (Alcance) ---");
+        System.out.println("--- 3. Probando Recorrido DFS ---");
         // Debería alcanzar a Juan, Maria, Ana y Pedro (Lucas no)
         redSocial.dfsAlcance(juan);
         System.out.println();
 
-        System.out.println("--- 4. Probando Recorrido BFS (Niveles) ---");
+        System.out.println("--- 4. Probando Recorrido BFS ---");
         // Debería mostrar: Nivel 1 a Maria/Pedro, Nivel 2 a Ana
         redSocial.bfsNiveles(juan);
         System.out.println();
@@ -61,7 +59,7 @@ public class Main {
         redSocial.recomendarAmigos(juan);
         System.out.println();
 
-        System.out.println("--- 6. Eliminando un Vértice (Pedro) ---");
+        System.out.println("--- 6. Eliminando un Vértice  ---");
         redSocial.eliminarVertice(pedro);
 
         redSocial.mostrarVertices();

@@ -143,7 +143,6 @@ public class GrafoMatrizAdyacencia implements IGrafo {
         }
     }
 
-    // --- RECORRIDO DFS (Recursividad sin arreglos adicionales complejos) ---
     @Override
     public void dfsAlcance(Usuario usuario) {
         int inicio = obtenerIndice(usuario);
@@ -169,7 +168,6 @@ public class GrafoMatrizAdyacencia implements IGrafo {
         }
     }
 
-    // --- RECORRIDO BFS Y RECOMENDACIONES ---
     @Override
     public void bfsNiveles(Usuario usuario) {
         int[] niveles = calcularNivelesBFS(usuario);
@@ -203,7 +201,6 @@ public class GrafoMatrizAdyacencia implements IGrafo {
         }
     }
 
-    // Método que implementa una COLA MANUAL con arreglos
     private int[] calcularNivelesBFS(Usuario origen) {
         int inicio = obtenerIndice(origen);
         if (inicio == -1) {
@@ -216,35 +213,27 @@ public class GrafoMatrizAdyacencia implements IGrafo {
             niveles[i] = -1; // -1 significa que aún no ha sido visitado
         }
 
-        // --- INICIO DE COLA MANUAL ---
-        // Un arreglo estándar hace la función de la cola
         int[] cola = new int[capacidad];
         int frente = 0;
         int fin = 0;
 
-        // Encolamos el nodo de inicio
         cola[fin] = inicio;
         fin++;
         niveles[inicio] = 0;
 
-        // Mientras la cola no esté vacía (el frente no ha alcanzado al fin)
         while (frente < fin) {
-            // Desencolamos
             int actual = cola[frente];
             frente++;
 
-            // Exploramos conexiones
             for (int i = 0; i < cantidad; i++) {
                 if (matriz[actual][i] == 1 && niveles[i] == -1) {
                     niveles[i] = niveles[actual] + 1;
 
-                    // Encolamos el nuevo nodo
                     cola[fin] = i;
                     fin++;
                 }
             }
         }
-        // --- FIN DE COLA MANUAL ---
 
         return niveles;
     }
