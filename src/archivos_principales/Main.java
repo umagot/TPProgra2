@@ -145,19 +145,26 @@ public class Main {
                 redSocial.mostrarMatriz();
 
 
-                System.out.println("Búsqueda por ID:");
+                System.out.println("--- 8. Búsqueda por ID---");
                 System.out.println("ID 1 -> " + indiceUsuarios.nombre(1));
                 System.out.println("ID 4 -> " + indiceUsuarios.nombre(4));
                 System.out.println("ID 8 -> " + indiceUsuarios.nombre(8)); // No existe
                 System.out.println();
 
 
-                System.out.println("Búsqueda por nombre de usuario:");
+                System.out.println("--- 9. Búsqueda por nombre de usuario ---");
                 System.out.println("Juan -> ID " + indiceUsuarios.id("Juan"));
                 System.out.println("Lucas -> ID " + indiceUsuarios.id("Lucas"));
                 System.out.println("Carlos -> ID " + indiceUsuarios.id("Carlos")); // No existe
 
+                System.out.println("--- 10. Listar usuarios registrados ---");
+                Comparable[] ids = indiceUsuarios.listarIds();
+                Comparable[] nombres = indiceUsuarios.listarNombres();
+                for (int i = 0; i < indiceUsuarios.tamanio(); i++) {
+                    System.out.println("ID: " + ids[i] + " - Usuario: " + nombres[i]);
+                }
 
+                System.out.println("--- 11. Cantidad de usuarios registrados: " + indiceUsuarios.tamanio());
 
             }
 

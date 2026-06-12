@@ -9,6 +9,16 @@ public class Usuario implements Comparable<Usuario> {
     String mail;
     Habilidades [] habilidades;
 
+    //Agrego este constructor para las pruebas en main con solo los 3 parametros que usamos por ahora
+    public Usuario(String nombre, int id, String mail) {
+        this.nombre = nombre;
+        this.id = id;
+        this.mail = mail;
+        this.especialidad = null;
+        this.subespecialidad = null;
+        this.habilidades = null;
+    }
+
     public Usuario(String nombre, int id, String mail, Especialidad  especialidad, Subespecialidad  subespecialidad, Habilidades [] habilidades) {
         this.nombre = nombre;
         this.id = id;
