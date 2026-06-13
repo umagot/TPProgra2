@@ -47,7 +47,45 @@ public class ProgramaPrincipal {
                     }
                     break;
 
-                // ... (Los casos 2, 3 y 4 quedan exactamente igual que antes) ...
+                case 2:
+                    // Demuestra el O(1): Busca sin iterar
+                    System.out.println("\n--- BUSCAR USUARIO ---");
+                    int idBuscar = SelectorPerfil.leerEntero(scanner, "Ingrese el ID a buscar: ");
+                    Usuario encontrado = plataforma.buscar(idBuscar);
+
+                    if (encontrado != null) {
+                        System.out.println("\nUSUARIO ENCONTRADO:");
+                        System.out.println(encontrado);
+                    } else {
+                        System.out.println("\n-> Error: No existe ningun usuario con el ID " + idBuscar);
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("\n--- EDITAR USUARIO ---");
+                    int idEditar = SelectorPerfil.leerEntero(scanner, "Ingrese el ID del usuario a editar: ");
+                    Usuario usuarioAEditar = plataforma.buscar(idEditar);
+
+                    if (usuarioAEditar != null) {
+                        gestorPerfil.editarUsuario(scanner, usuarioAEditar);
+                    } else {
+                        System.out.println("\n-> Error: No existe ningun usuario con el ID " + idEditar);
+                    }
+
+                    break;
+
+                case 4:
+                    System.out.println("\n--- DESHACER CAMBIOS ---");
+                    int idDeshacer = SelectorPerfil.leerEntero(scanner, "Ingrese el ID del usuario: ");
+                    Usuario usuarioADeshacer = plataforma.buscar(idDeshacer);
+
+                    if (usuarioADeshacer != null) {
+                        gestorPerfil.deshacerCambio(usuarioADeshacer);
+                    } else {
+                        System.out.println("\n-> Error: No existe ningun usuario con el ID " + idDeshacer);
+                    }
+
+                    break;
 
                 case 5:
                     System.out.println("\n--- ELIMINAR USUARIO ---");
@@ -56,12 +94,12 @@ public class ProgramaPrincipal {
                     Usuario usuarioAEliminar = plataforma.buscar(idEliminar);
                     if (usuarioAEliminar != null) {
                         plataforma.eliminar(idEliminar);
-                        // 3. LO ELIMINAMOS DEL GRAFO TAMBIÉN
                         redSocial.eliminarVertice(usuarioAEliminar);
                         System.out.println("\n-> Usuario eliminado con exito de la plataforma y sus conexiones.");
                     } else {
                         System.out.println("\n-> Error: No se encontro un usuario con ese ID.");
                     }
+
                     break;
 
                 case 6:
