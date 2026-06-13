@@ -42,7 +42,7 @@ public class SelectorPerfil {
             numero = leerEntero(scanner, mensaje);
 
             if (numero < minimo || numero > maximo) {
-                System.out.println("Opcion invalida.");
+                System.out.println("Opcion invalida. Debe estar entre " + minimo + " y " + maximo + ".");
             }
 
         } while (numero < minimo || numero > maximo);
@@ -53,7 +53,7 @@ public class SelectorPerfil {
     public static Especialidad elegirEspecialidad(java.util.Scanner scanner) {
         Especialidad[] especialidades = Especialidad.values();
 
-        System.out.println("\nSeleccione especialidad:");
+        System.out.println("\nSeleccione una especialidad:");
 
         for (int i = 0; i < especialidades.length; i++) {
             System.out.println((i + 1) + ". " + especialidades[i]);
@@ -77,7 +77,7 @@ public class SelectorPerfil {
             }
         }
 
-        System.out.println("\nSeleccione subespecialidad para " + especialidad + ":");
+        System.out.println("\nSeleccione una subespecialidad para " + especialidad + ":");
 
         for (int i = 0; i < cantidad; i++) {
             System.out.println((i + 1) + ". " + filtradas[i]);
@@ -107,27 +107,56 @@ public class SelectorPerfil {
             System.out.println((i + 1) + ". " + disponibles[i]);
         }
 
-        int cantidadElegidas = leerEnteroEnRango(
-                scanner,
-                "Cuantas habilidades desea elegir?: ",
-                1,
-                cantidadDisponibles
-        );
+        System.out.println("-1. Finalizar carga de habilidades");
 
-        Habilidades[] elegidas = new Habilidades[cantidadElegidas];
+        Habilidades[] seleccionadasTemporal = new Habilidades[cantidadDisponibles];
+        int cantidadSeleccionadas = 0;
 
-        for (int i = 0; i < cantidadElegidas; i++) {
-            int opcion = leerEnteroEnRango(
+        int opcion;
+
+        do {
+            opcion = leerEnteroEnRango(
                     scanner,
-                    "Seleccione habilidad " + (i + 1) + ": ",
-                    1,
+                    "Seleccione una habilidad o -1 para finalizar: ",
+                    -1,
                     cantidadDisponibles
             );
 
-            elegidas[i] = disponibles[opcion - 1];
+            if (opcion != -1) {
+                Habilidades habilidadElegida = disponibles[opcion - 1];
+
+                if (yaFueElegida(seleccionadasTemporal, cantidadSeleccionadas, habilidadElegida)) {
+                    System.out.println("Esa habilidad ya fue seleccionada.");
+                } else {
+                    seleccionadasTemporal[cantidadSeleccionadas] = habilidadElegida;
+                    cantidadSeleccionadas++;
+                    System.out.println("Habilidad agregada: " + habilidadElegida);
+                }
+            }
+
+        } while (opcion != -1 && cantidadSeleccionadas < cantidadDisponibles);
+
+        Habilidades[] habilidadesElegidas = new Habilidades[cantidadSeleccionadas];
+
+        for (int i = 0; i < cantidadSeleccionadas; i++) {
+            habilidadesElegidas[i] = seleccionadasTemporal[i];
         }
 
-        return elegidas;
+        return habilidadesElegidas;
+    }
+
+    private static boolean yaFueElegida(
+            Habilidades[] seleccionadas,
+            int cantidadSeleccionadas,
+            Habilidades habilidad
+    ) {
+        for (int i = 0; i < cantidadSeleccionadas; i++) {
+            if (seleccionadas[i] == habilidad) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public static Perfil cargarPerfil(java.util.Scanner scanner) {
@@ -138,16 +167,21 @@ public class SelectorPerfil {
         return new Perfil(especialidad, subespecialidad, habilidades);
     }
 
-//    public static Perfil[] cargarPerfiles(java.util.Scanner scanner) {
-//        int cantidad = leerEnteroEnRango(scanner, "\nCuantos perfiles desea cargar?: ", 1, 10);
-//
-//        Perfil[] perfiles = new Perfil[cantidad];
-//
-//        for (int i = 0; i < cantidad; i++) {
-//            System.out.println("\nCarga del perfil " + (i + 1));
-//            perfiles[i] = cargarPerfil(scanner);
-//        }
-//
-//        return perfiles;
-//    }
+    public static Perfil[] cargarPerfiles(java.util.Scanner scanner) {
+        int cantidad = leerEnteroEnRango(
+                scanner,
+                "\nCuantos perfiles desea cargar?: ",
+                1,
+                10
+        );
+
+        Perfil[] perfiles = new Perfil[cantidad];
+
+        for (int i = 0; i < cantidad; i++) {
+            System.out.println("\nCarga del perfil " + (i + 1) + ":");
+            perfiles[i] = cargarPerfil(scanner);
+        }
+
+        return perfiles;
+    }
 }

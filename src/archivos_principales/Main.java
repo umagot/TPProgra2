@@ -8,10 +8,10 @@ public class Main {
 //        IGrafo redSocial = new GrafoMatrizAdyacencia(5, false);
 //
 //        // 2. Crear usuarios con IDs únicos
-//        Usuario juan = new Usuario("Juan", 1, "juan@mail.com");
-//        Usuario maria = new Usuario("Maria", 2, "maria@mail.com");
-//        Usuario pedro = new Usuario("Pedro", 3, "pedro@mail.com");
-//        Usuario ana = new Usuario("Ana", 4, "ana@mail.com");
+            Usuario juan = new Usuario("Juan", 1, "juan@mail.com");
+        Usuario maria = new Usuario("Maria", 2, "maria@mail.com");
+       Usuario pedro = new Usuario("Pedro", 3, "pedro@mail.com");
+        Usuario ana = new Usuario("Ana", 4, "ana@mail.com");
 //        Usuario lucas = new Usuario("Lucas", 5, "lucas@mail.com");
 //
 //        System.out.println(" --- 1. Insertando Usuarios ---");
