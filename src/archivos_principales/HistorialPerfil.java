@@ -42,7 +42,9 @@ public class HistorialPerfil {
 
         usuario.setNombre(anterior.getNombre());
         usuario.setMail(anterior.getMail());
-        usuario.setPerfiles(anterior.getPerfiles());
+
+        // ESTO CAMBIA: de getPerfiles() a getPerfil()
+        usuario.setPerfil(anterior.getPerfil());
 
         System.out.println("Se restauro el cambio anterior.");
     }

@@ -8,16 +8,29 @@ public class GestorPerfil {
         historialPerfil = new HistorialPerfil(tamanoHistorial);
     }
 
-    public Usuario completarUsuario(java.util.Scanner scanner) {
+    // Le agregamos la TablaHashUsuario como parámetro
+    public Usuario completarUsuario(java.util.Scanner scanner, DiccionarioUsuarios plataforma) {
         System.out.println("\n--- COMPLETAR USUARIO ---");
 
         String nombre = SelectorPerfil.leerTexto(scanner, "Ingrese nombre: ");
-        int id = SelectorPerfil.leerEntero(scanner, "Ingrese id: ");
+
+        int id;
+        // Bucle infinito que solo se rompe si el ID es válido
+        while (true) {
+            id = SelectorPerfil.leerEntero(scanner, "Ingrese id: ");
+
+            // Verificamos en la plataforma si ya existe
+            if (plataforma.buscar(id) != null) {
+                System.out.println("-> Error: El ID " + id + " ya esta registrado. Intente con otro.");
+            } else {
+                break; // El ID está libre, salimos del bucle
+            }
+        }
+
         String mail = SelectorPerfil.leerTexto(scanner, "Ingrese mail: ");
+        Perfil perfil = SelectorPerfil.cargarPerfil(scanner);
 
-        Perfil[] perfiles = SelectorPerfil.cargarPerfiles(scanner);
-
-        Usuario usuario = new Usuario(nombre, id, mail, perfiles);
+        Usuario usuario = new Usuario(nombre, id, mail, perfil);
 
         System.out.println("\nUsuario creado correctamente.");
         return usuario;
@@ -38,39 +51,25 @@ public class GestorPerfil {
 
             System.out.println("\n1. Editar nombre");
             System.out.println("2. Editar mail");
-            System.out.println("3. Reemplazar todos los perfiles");
-            System.out.println("4. Agregar un perfil");
-            System.out.println("5. Eliminar un perfil");
-            System.out.println("6. Editar todo");
+            System.out.println("3. Editar/Actualizar perfil");
+            System.out.println("4. Editar todo");
             System.out.println("0. Salir");
 
-            opcion = SelectorPerfil.leerEnteroEnRango(scanner, "Opcion: ", 0, 6);
+            opcion = SelectorPerfil.leerEnteroEnRango(scanner, "Opcion: ", 0, 4);
 
             switch (opcion) {
                 case 1:
                     editarNombre(scanner, usuario);
                     break;
-
                 case 2:
                     editarMail(scanner, usuario);
                     break;
-
                 case 3:
-                    reemplazarPerfiles(scanner, usuario);
+                    editarPerfil(scanner, usuario);
                     break;
-
                 case 4:
-                    agregarPerfil(scanner, usuario);
-                    break;
-
-                case 5:
-                    eliminarPerfil(scanner, usuario);
-                    break;
-
-                case 6:
                     editarTodo(scanner, usuario);
                     break;
-
                 case 0:
                     System.out.println("Edicion finalizada.");
                     break;
@@ -101,83 +100,16 @@ public class GestorPerfil {
         System.out.println("Mail actualizado.");
     }
 
-    private void reemplazarPerfiles(java.util.Scanner scanner, Usuario usuario) {
+    private void editarPerfil(java.util.Scanner scanner, Usuario usuario) {
         if (!historialPerfil.guardarEstado(usuario)) {
             return;
         }
 
-        Perfil[] nuevosPerfiles = SelectorPerfil.cargarPerfiles(scanner);
-        usuario.setPerfiles(nuevosPerfiles);
-
-        System.out.println("Perfiles reemplazados.");
-    }
-
-    private void agregarPerfil(java.util.Scanner scanner, Usuario usuario) {
-        if (!historialPerfil.guardarEstado(usuario)) {
-            return;
-        }
-
+        // Simplemente pisamos el perfil viejo con uno nuevo
         Perfil nuevoPerfil = SelectorPerfil.cargarPerfil(scanner);
-        Perfil[] actuales = usuario.getPerfiles();
+        usuario.setPerfil(nuevoPerfil);
 
-        int cantidadActual = 0;
-
-        if (actuales != null) {
-            cantidadActual = actuales.length;
-        }
-
-        Perfil[] nuevos = new Perfil[cantidadActual + 1];
-
-        for (int i = 0; i < cantidadActual; i++) {
-            nuevos[i] = actuales[i];
-        }
-
-        nuevos[cantidadActual] = nuevoPerfil;
-
-        usuario.setPerfiles(nuevos);
-
-        System.out.println("Perfil agregado.");
-    }
-
-    private void eliminarPerfil(java.util.Scanner scanner, Usuario usuario) {
-        Perfil[] actuales = usuario.getPerfiles();
-
-        if (actuales == null || actuales.length == 0) {
-            System.out.println("El usuario no tiene perfiles para eliminar.");
-            return;
-        }
-
-        System.out.println("\nPerfiles actuales:");
-
-        for (int i = 0; i < actuales.length; i++) {
-            System.out.println((i + 1) + ". " + actuales[i]);
-        }
-
-        int opcion = SelectorPerfil.leerEnteroEnRango(
-                scanner,
-                "Seleccione perfil a eliminar: ",
-                1,
-                actuales.length
-        );
-
-        if (!historialPerfil.guardarEstado(usuario)) {
-            return;
-        }
-
-        Perfil[] nuevos = new Perfil[actuales.length - 1];
-
-        int j = 0;
-
-        for (int i = 0; i < actuales.length; i++) {
-            if (i != opcion - 1) {
-                nuevos[j] = actuales[i];
-                j++;
-            }
-        }
-
-        usuario.setPerfiles(nuevos);
-
-        System.out.println("Perfil eliminado.");
+        System.out.println("Perfil actualizado.");
     }
 
     private void editarTodo(java.util.Scanner scanner, Usuario usuario) {
@@ -187,32 +119,16 @@ public class GestorPerfil {
 
         String nuevoNombre = SelectorPerfil.leerTexto(scanner, "Ingrese nuevo nombre: ");
         String nuevoMail = SelectorPerfil.leerTexto(scanner, "Ingrese nuevo mail: ");
-        Perfil[] nuevosPerfiles = SelectorPerfil.cargarPerfiles(scanner);
+        Perfil nuevoPerfil = SelectorPerfil.cargarPerfil(scanner);
 
         usuario.setNombre(nuevoNombre);
         usuario.setMail(nuevoMail);
-        usuario.setPerfiles(nuevosPerfiles);
+        usuario.setPerfil(nuevoPerfil);
 
         System.out.println("Usuario actualizado completamente.");
     }
 
     public void deshacerCambio(Usuario usuario) {
         historialPerfil.deshacer(usuario);
-    }
-
-    public void completarPerfilExistente(java.util.Scanner scanner, Usuario usuario) {
-        if (usuario == null) {
-            System.out.println("No hay usuario para completar.");
-            return;
-        }
-
-        if (!historialPerfil.guardarEstado(usuario)) {
-            return;
-        }
-
-        Perfil[] perfiles = SelectorPerfil.cargarPerfiles(scanner);
-        usuario.setPerfiles(perfiles);
-
-        System.out.println("Perfil completado correctamente.");
     }
 }

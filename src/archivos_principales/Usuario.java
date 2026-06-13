@@ -2,65 +2,46 @@ package archivos_principales;
 
 public class Usuario implements Comparable<Usuario> {
 
-    int id;
-    String nombre;
-    String mail;
-    Perfil[] perfiles;
+    private int id;
+    private String nombre;
+    private String mail;
+    private Perfil perfil; // Un único perfil
 
-    public Usuario(String nombre, int id, String mail, Perfil[] perfiles) {
+    // Constructor completo
+    public Usuario(String nombre, int id, String mail, Perfil perfil) {
         this.nombre = nombre;
         this.id = id;
         this.mail = mail;
-        this.perfiles = copiarPerfiles(perfiles);
+
+        if (perfil != null) {
+            this.perfil = new Perfil(perfil); // Constructor copia
+        } else {
+            this.perfil = null;
+        }
     }
 
-    // Constructor copia para guardar historial en la pila
+    // Constructor copia para guardar el historial en la pila
     public Usuario(Usuario otro) {
         this.nombre = otro.nombre;
         this.id = otro.id;
         this.mail = otro.mail;
-        this.perfiles = copiarPerfiles(otro.perfiles);
+
+        if (otro.perfil != null) {
+            this.perfil = new Perfil(otro.perfil);
+        } else {
+            this.perfil = null;
+        }
     }
-    // constructor 2
+
+    // Constructor alternativo (sin perfil inicial)
     public Usuario(String nombre, int id, String mail) {
         this.nombre = nombre;
         this.id = id;
         this.mail = mail;
-        this.perfiles = null;
+        this.perfil = null;
     }
 
-    private Perfil[] copiarPerfiles(Perfil[] origen) {
-        if (origen == null) {
-            return null;
-        }
-
-        Perfil[] copia = new Perfil[origen.length];
-
-        for (int i = 0; i < origen.length; i++) {
-            copia[i] = new Perfil(origen[i]);
-        }
-
-        return copia;
-    }
-
-    private String perfilesComoTexto() {
-        if (perfiles == null || perfiles.length == 0) {
-            return "Sin perfiles";
-        }
-
-        String texto = "";
-
-        for (int i = 0; i < perfiles.length; i++) {
-            texto = texto + perfiles[i];
-
-            if (i < perfiles.length - 1) {
-                texto = texto + " | ";
-            }
-        }
-
-        return texto;
-    }
-
+    // Getters
     public String getNombre() {
         return nombre;
     }
@@ -73,10 +54,15 @@ public class Usuario implements Comparable<Usuario> {
         return mail;
     }
 
-    public Perfil[] getPerfiles() {
-        return copiarPerfiles(perfiles);
+    public Perfil getPerfil() {
+        if (this.perfil != null) {
+            return new Perfil(this.perfil);
+        } else {
+            return null;
+        }
     }
 
+    // Setters
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -85,15 +71,18 @@ public class Usuario implements Comparable<Usuario> {
         this.mail = mail;
     }
 
-    public void setPerfiles(Perfil[] perfiles) {
-        this.perfiles = copiarPerfiles(perfiles);
+    public void setPerfil(Perfil perfil) {
+        if (perfil != null) {
+            this.perfil = new Perfil(perfil);
+        } else {
+            this.perfil = null;
+        }
     }
 
     public boolean esIgual(Usuario otro) {
         if (otro == null) {
             return false;
         }
-
         return this.id == otro.getId();
     }
 
@@ -110,8 +99,14 @@ public class Usuario implements Comparable<Usuario> {
 
     @Override
     public String toString() {
-        return "@" + nombre +
-                " | Mail: " + mail +
-                " | Perfiles: " + perfilesComoTexto();
+        String textoPerfil;
+
+        if (this.perfil == null) {
+            textoPerfil = "Sin perfil configurado";
+        } else {
+            textoPerfil = this.perfil.toString();
+        }
+
+        return "@" + nombre + " (ID: " + id + ") | Mail: " + mail + " | Perfil: " + textoPerfil;
     }
 }

@@ -138,16 +138,16 @@ public class SelectorPerfil {
         return new Perfil(especialidad, subespecialidad, habilidades);
     }
 
-    public static Perfil[] cargarPerfiles(java.util.Scanner scanner) {
-        int cantidad = leerEnteroEnRango(scanner, "\nCuantos perfiles desea cargar?: ", 1, 10);
-
-        Perfil[] perfiles = new Perfil[cantidad];
-
-        for (int i = 0; i < cantidad; i++) {
-            System.out.println("\nCarga del perfil " + (i + 1));
-            perfiles[i] = cargarPerfil(scanner);
-        }
-
-        return perfiles;
-    }
+//    public static Perfil[] cargarPerfiles(java.util.Scanner scanner) {
+//        int cantidad = leerEnteroEnRango(scanner, "\nCuantos perfiles desea cargar?: ", 1, 10);
+//
+//        Perfil[] perfiles = new Perfil[cantidad];
+//
+//        for (int i = 0; i < cantidad; i++) {
+//            System.out.println("\nCarga del perfil " + (i + 1));
+//            perfiles[i] = cargarPerfil(scanner);
+//        }
+//
+//        return perfiles;
+//    }
 }
