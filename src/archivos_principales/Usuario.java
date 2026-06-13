@@ -4,28 +4,14 @@ public class Usuario implements Comparable<Usuario> {
 
     int id;
     String nombre;
-    Especialidad especialidad;
-    Subespecialidad subespecialidad;
     String mail;
-    Habilidades [] habilidades;
+    Perfil[] perfiles;
 
-    //Agrego este constructor para las pruebas en main con solo los 3 parametros que usamos por ahora
-    public Usuario(String nombre, int id, String mail) {
+    public Usuario(String nombre, int id, String mail, Perfil[] perfiles) {
         this.nombre = nombre;
         this.id = id;
         this.mail = mail;
-        this.especialidad = null;
-        this.subespecialidad = null;
-        this.habilidades = null;
-    }
-
-    public Usuario(String nombre, int id, String mail, Especialidad  especialidad, Subespecialidad  subespecialidad, Habilidades [] habilidades) {
-        this.nombre = nombre;
-        this.id = id;
-        this.mail = mail;
-        this.especialidad = especialidad;
-        this.subespecialidad = subespecialidad;
-        this.habilidades = copiarHabilidades(habilidades);
+        this.perfiles = copiarPerfiles(perfiles);
     }
 
     // Constructor copia para guardar historial en la pila
@@ -33,37 +19,42 @@ public class Usuario implements Comparable<Usuario> {
         this.nombre = otro.nombre;
         this.id = otro.id;
         this.mail = otro.mail;
-        this.especialidad = otro.especialidad;
-        this.subespecialidad = otro.subespecialidad;
-        this.habilidades = copiarHabilidades(otro.habilidades);
+        this.perfiles = copiarPerfiles(otro.perfiles);
+    }
+    // constructor 2
+    public Usuario(String nombre, int id, String mail) {
+        this.nombre = nombre;
+        this.id = id;
+        this.mail = mail;
+        this.perfiles = null;
     }
 
-    private Habilidades[] copiarHabilidades(Habilidades[] origen) {
+    private Perfil[] copiarPerfiles(Perfil[] origen) {
         if (origen == null) {
             return null;
         }
 
-        Habilidades[] copia = new Habilidades[origen.length];
+        Perfil[] copia = new Perfil[origen.length];
 
         for (int i = 0; i < origen.length; i++) {
-            copia[i] = origen[i];
+            copia[i] = new Perfil(origen[i]);
         }
 
         return copia;
     }
 
-    private String habilidadesComoTexto() {
-        if (habilidades == null || habilidades.length == 0) {
-            return "Sin habilidades";
+    private String perfilesComoTexto() {
+        if (perfiles == null || perfiles.length == 0) {
+            return "Sin perfiles";
         }
 
         String texto = "";
 
-        for (int i = 0; i < habilidades.length; i++) {
-            texto = texto + habilidades[i];
+        for (int i = 0; i < perfiles.length; i++) {
+            texto = texto + perfiles[i];
 
-            if (i < habilidades.length - 1) {
-                texto = texto + ", ";
+            if (i < perfiles.length - 1) {
+                texto = texto + " | ";
             }
         }
 
@@ -82,16 +73,20 @@ public class Usuario implements Comparable<Usuario> {
         return mail;
     }
 
-    public Especialidad getEspecialidad() {
-        return especialidad;
+    public Perfil[] getPerfiles() {
+        return copiarPerfiles(perfiles);
     }
 
-    public Subespecialidad getSubespecialidad() {
-        return subespecialidad;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public Habilidades[] getHabilidades() {
-        return copiarHabilidades(habilidades);
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public void setPerfiles(Perfil[] perfiles) {
+        this.perfiles = copiarPerfiles(perfiles);
     }
 
     public boolean esIgual(Usuario otro) {
@@ -116,8 +111,7 @@ public class Usuario implements Comparable<Usuario> {
     @Override
     public String toString() {
         return "@" + nombre +
-                " | " + especialidad +
-                " > " + subespecialidad +
-                " > " + habilidadesComoTexto();
+                " | Mail: " + mail +
+                " | Perfiles: " + perfilesComoTexto();
     }
 }

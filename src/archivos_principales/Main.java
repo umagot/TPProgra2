@@ -165,7 +165,36 @@ public class Main {
                 }
 
                 System.out.println("--- 11. Cantidad de usuarios registrados: " + indiceUsuarios.tamanio());
+        System.out.println();
+        System.out.println("--- 12. Completar / Editar perfil de usuario ---");
 
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+
+        GestorPerfil gestorPerfil = new GestorPerfil(20);
+
+        System.out.println("Usuario antes de completar perfil:");
+        System.out.println(juan);
+
+// Primero completás o reemplazás perfiles de Juan
+        gestorPerfil.completarPerfilExistente(scanner, juan);
+
+        System.out.println("Usuario despues de completar perfil:");
+        System.out.println(juan);
+
+// Después podés editar nombre, mail, perfiles, etc.
+        gestorPerfil.editarUsuario(scanner, juan);
+
+        System.out.println("Usuario despues de editar:");
+        System.out.println(juan);
+
+// Si querés probar deshacer:
+        System.out.println("Deshaciendo ultimo cambio...");
+        gestorPerfil.deshacerCambio(juan);
+
+        System.out.println("Usuario despues de deshacer:");
+        System.out.println(juan);
             }
+
+
 
 }
