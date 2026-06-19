@@ -30,9 +30,10 @@ public class ProgramaPrincipal {
             System.out.println("5. Eliminar usuario de la plataforma");
             System.out.println("6. Conectar dos usuarios (Agregar Amistad)");
             System.out.println("7. Ver recomendaciones y red de un usuario");
+            System.out.println("8 Gestion de postulaciones");
             System.out.println("0. Salir");
 
-            opcion = SelectorPerfil.leerEnteroEnRango(scanner, "\nSeleccione una opcion: ", 0, 7);
+            opcion = SelectorPerfil.leerEnteroEnRango(scanner, "\nSeleccione una opcion: ", 0, 8);
 
             switch (opcion) {
                 case 1:
@@ -136,10 +137,28 @@ public class ProgramaPrincipal {
                 case 0:
                     System.out.println("\nSaliendo del sistema... ¡Hasta luego!");
                     break;
+                case 8:
+                    System.out.println("\n--- GESTION DE POSTULACIONES ---");
+                    GestorPostulaciones gestor = new GestorPostulaciones(5);
+
+                    gestor.recibirSolicitud(new SolicitudEmpleo("Carlos Pérez", Postulacion.DEV_FULLSTACK));
+                    gestor.recibirSolicitud(new SolicitudEmpleo("Ana Gómez", Postulacion.UX_UI_DESIGNER));
+                    gestor.recibirSolicitud(new SolicitudEmpleo("Juan López", Postulacion.DATA_ENGINEER));
+
+                    System.out.println("\n--- Estado de la revisión ---");
+                    gestor.verProximaSolicitud(); // Muestra a Carlos Pérez
+                    gestor.procesarSiguienteSolicitud();
+                    gestor.procesarSiguienteSolicitud();
+                    gestor.recibirSolicitud(new SolicitudEmpleo("María Rodríguez", Postulacion.PROJECT_MANAGER));
+                    gestor.verProximaSolicitud();
+                    break;
             }
 
         } while (opcion != 0);
-
         scanner.close();
+
+
     }
-}
+    }
+
+
