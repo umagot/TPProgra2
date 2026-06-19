@@ -2,18 +2,14 @@ package archivos_principales;
 
 public class Perfil {
 
-    Especialidad especialidad;
-    Subespecialidad subespecialidad;
-    Habilidades[] habilidades;
+    private Categoria especialidad;
+    private Categoria subespecialidad;
+    private Habilidad[] habilidades;
 
-    public Perfil(
-            Especialidad especialidad,
-            Subespecialidad subespecialidad,
-            Habilidades[] habilidades
-    ) {
+    public Perfil(Categoria especialidad, Categoria subespecialidad, Habilidad[] habilidades) {
         this.especialidad = especialidad;
         this.subespecialidad = subespecialidad;
-        this.habilidades = copiarHabilidades (habilidades);
+        this.habilidades = copiarHabilidades(habilidades);
     }
 
     public Perfil(Perfil otro) {
@@ -22,12 +18,13 @@ public class Perfil {
         this.habilidades = copiarHabilidades(otro.habilidades);
     }
 
-    private Habilidades[] copiarHabilidades(Habilidades[] origen) {
+    // Tu método original, excelente para evitar mutaciones externas
+    private Habilidad[] copiarHabilidades(Habilidad[] origen) {
         if (origen == null) {
             return null;
         }
 
-        Habilidades[] copia = new Habilidades[origen.length];
+        Habilidad[] copia = new Habilidad[origen.length];
 
         for (int i = 0; i < origen.length; i++) {
             copia[i] = origen[i];
@@ -44,29 +41,33 @@ public class Perfil {
         String texto = "";
 
         for (int i = 0; i < habilidades.length; i++) {
-            texto = texto + habilidades[i];
+            texto += habilidades[i].getNombre();
 
             if (i < habilidades.length - 1) {
-                texto = texto + ", ";
+                texto += ", ";
             }
         }
 
         return texto;
     }
 
-    public Especialidad getEspecialidad() {
+    public Categoria getEspecialidad() {
         return especialidad;
     }
 
-    public Subespecialidad getSubespecialidad() {
+    public Categoria getSubespecialidad() {
         return subespecialidad;
     }
 
-    public Habilidades[] getHabilidades() {
+    public Habilidad[] getHabilidades() {
         return copiarHabilidades(habilidades);
     }
 
+    @Override
     public String toString() {
-        return especialidad + " > " + subespecialidad + " > " + habilidadesComoTexto();
+        String nombreEsp = (especialidad != null) ? especialidad.getNombre() : "Sin Especialidad";
+        String nombreSub = (subespecialidad != null) ? subespecialidad.getNombre() : "Sin Subespecialidad";
+
+        return nombreEsp + " > " + nombreSub + " > " + habilidadesComoTexto();
     }
 }

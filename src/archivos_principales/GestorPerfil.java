@@ -3,9 +3,12 @@ package archivos_principales;
 public class GestorPerfil {
 
     private HistorialPerfil historialPerfil;
+    private Categoria catalogoRaiz;
 
-    public GestorPerfil(int tamanoHistorial) {
-        historialPerfil = new HistorialPerfil(tamanoHistorial);
+
+    public GestorPerfil(int tamanoHistorial, Categoria catalogoRaiz) {
+        this.historialPerfil = new HistorialPerfil(tamanoHistorial);
+        this.catalogoRaiz = catalogoRaiz;
     }
 
     // Le agregamos la TablaHashUsuario como parámetro
@@ -28,7 +31,7 @@ public class GestorPerfil {
         }
 
         String mail = SelectorPerfil.leerTexto(scanner, "Ingrese mail: ");
-        Perfil perfil = SelectorPerfil.cargarPerfil(scanner);
+        Perfil perfil = SelectorPerfil.cargarPerfil(scanner, catalogoRaiz);
 
         Usuario usuario = new Usuario(nombre, id, mail, perfil);
 
@@ -106,7 +109,7 @@ public class GestorPerfil {
         }
 
         // Simplemente pisamos el perfil viejo con uno nuevo
-        Perfil nuevoPerfil = SelectorPerfil.cargarPerfil(scanner);
+        Perfil nuevoPerfil = SelectorPerfil.cargarPerfil(scanner, catalogoRaiz);
         usuario.setPerfil(nuevoPerfil);
 
         System.out.println("Perfil actualizado.");
@@ -119,7 +122,7 @@ public class GestorPerfil {
 
         String nuevoNombre = SelectorPerfil.leerTexto(scanner, "Ingrese nuevo nombre: ");
         String nuevoMail = SelectorPerfil.leerTexto(scanner, "Ingrese nuevo mail: ");
-        Perfil nuevoPerfil = SelectorPerfil.cargarPerfil(scanner);
+        Perfil nuevoPerfil = SelectorPerfil.cargarPerfil(scanner, catalogoRaiz);
 
         usuario.setNombre(nuevoNombre);
         usuario.setMail(nuevoMail);
