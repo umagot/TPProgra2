@@ -1,12 +1,14 @@
 package archivos_principales;
 
+import Implementaciones.Arbol_Categoria;
+
 public class GestorPerfil {
 
     private HistorialPerfil historialPerfil;
-    private Categoria catalogoRaiz;
+    private Arbol_Categoria catalogoRaiz;
 
 
-    public GestorPerfil(int tamanoHistorial, Categoria catalogoRaiz) {
+    public GestorPerfil(int tamanoHistorial, Arbol_Categoria catalogoRaiz) {
         this.historialPerfil = new HistorialPerfil(tamanoHistorial);
         this.catalogoRaiz = catalogoRaiz;
     }

@@ -1,12 +1,14 @@
 package archivos_principales;
 
+import Implementaciones.Arbol_Categoria;
+
 public class Perfil {
 
-    private Categoria especialidad;
-    private Categoria subespecialidad;
+    private Arbol_Categoria especialidad;
+    private Arbol_Categoria subespecialidad;
     private Habilidad[] habilidades;
 
-    public Perfil(Categoria especialidad, Categoria subespecialidad, Habilidad[] habilidades) {
+    public Perfil(Arbol_Categoria especialidad, Arbol_Categoria subespecialidad, Habilidad[] habilidades) {
         this.especialidad = especialidad;
         this.subespecialidad = subespecialidad;
         this.habilidades = copiarHabilidades(habilidades);
@@ -51,11 +53,11 @@ public class Perfil {
         return texto;
     }
 
-    public Categoria getEspecialidad() {
+    public Arbol_Categoria getEspecialidad() {
         return especialidad;
     }
 
-    public Categoria getSubespecialidad() {
+    public Arbol_Categoria getSubespecialidad() {
         return subespecialidad;
     }
 

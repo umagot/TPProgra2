@@ -1,13 +1,13 @@
 
-package archivos_principales;
+package Implementaciones;
 import Interfaces.Componente;
 
-public class Categoria implements Componente {
+public class Arbol_Categoria implements Componente {
     private String nombre;
     private Componente[] hijos;
     private int cantidadHijos;
 
-    public Categoria(String nombre) {
+    public Arbol_Categoria(String nombre) {
         this.nombre = nombre;
         this.hijos = new Componente[5]; // Capacidad inicial arbitraria
         this.cantidadHijos = 0;

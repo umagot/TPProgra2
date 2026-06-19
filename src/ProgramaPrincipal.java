@@ -9,7 +9,7 @@ public class ProgramaPrincipal {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        Categoria catalogoGeneral = inicializarCatalogo();
+        Arbol_Categoria catalogoGeneral = inicializarCatalogo();
 
         DiccionarioUsuarios plataforma = new DiccionarioUsuarios(100);
         GestorPerfil gestorPerfil = new GestorPerfil(10, catalogoGeneral);
@@ -31,9 +31,10 @@ public class ProgramaPrincipal {
             System.out.println("6. Conectar dos usuarios (Agregar Amistad)");
             System.out.println("7. Ver recomendaciones y red de un usuario");
             System.out.println("8. Gestion de postulaciones");
+            System.out.println("9. Buscar usuarios por perfil");
             System.out.println("0. Salir");
 
-            opcion = SelectorPerfil.leerEnteroEnRango(scanner, "\nSeleccione una opcion: ", 0, 8);
+            opcion = SelectorPerfil.leerEnteroEnRango(scanner, "\nSeleccione una opcion: ", 0, 9);
 
             switch (opcion) {
                 case 1:
@@ -133,6 +134,7 @@ public class ProgramaPrincipal {
                         System.out.println("-> Error: Usuario no encontrado.");
                     }
                     break;
+                    
                 case 8:
                     GestorPostulaciones gestor = new GestorPostulaciones(5);
 
@@ -148,6 +150,12 @@ public class ProgramaPrincipal {
                     gestor.recibirSolicitud(new SolicitudEmpleo("María Rodríguez", Postulacion.PROJECT_MANAGER));
                     gestor.verProximaSolicitud();
                     break;
+                    
+                case 9:
+                    // NUEVA OPCIÓN: Búsqueda de usuarios por perfil
+                    BuscadorPerfilesUI.menuBuscar(scanner, plataforma, catalogoGeneral);
+                    break;
+                    
                 case 0:
                     System.out.println("\nSaliendo del sistema... ¡Hasta luego!");
                     break;
@@ -157,8 +165,8 @@ public class ProgramaPrincipal {
 
         scanner.close();
     }
-    private static Categoria inicializarCatalogo() {
-        Categoria raiz = new Categoria("Catalogo de Especialidades");
+    private static Arbol_Categoria inicializarCatalogo() {
+        Arbol_Categoria raiz = new Arbol_Categoria("Catalogo de Especialidades");
 
         // ==========================================
         // 0. DEFINIMOS LAS HABILIDADES BLANDAS (Una sola vez)
@@ -184,146 +192,111 @@ public class ProgramaPrincipal {
         // ==========================================
         // 1. TECNOLOGIA
         // ==========================================
-        Categoria tecnologia = new Categoria("Tecnologia");
+        Arbol_Categoria tecnologia = new Arbol_Categoria("Tecnologia");
 
-        Categoria tecDesarrollo = new Categoria("Desarrollo");
+        Arbol_Categoria tecDesarrollo = new Arbol_Categoria("Desarrollo");
         tecDesarrollo.agregar(new Habilidad("Java", false));
         tecDesarrollo.agregar(new Habilidad("Python", false));
-        tecDesarrollo.agregar(new Habilidad("HTML", false));
-        tecDesarrollo.agregar(new Habilidad("CSS", false));
         tecDesarrollo.agregar(new Habilidad("JavaScript", false));
-        tecDesarrollo.agregar(new Habilidad("PHP", false));
-        tecDesarrollo.agregar(new Habilidad("C#", false));
-        tecDesarrollo.agregar(new Habilidad("C++", false));
-        tecDesarrollo.agregar(new Habilidad("React", false));
-        tecDesarrollo.agregar(new Habilidad("Node.js", false));
+        tecDesarrollo.agregar(new Habilidad("Go", false));
+        tecDesarrollo.agregar(new Habilidad("Rust", false));
 
-        Categoria tecBaseDatos = new Categoria("Base de datos");
+        Arbol_Categoria tecBaseDatos = new Arbol_Categoria("Bases de datos");
         tecBaseDatos.agregar(new Habilidad("SQL", false));
-        tecBaseDatos.agregar(new Habilidad("MySQL", false));
-        tecBaseDatos.agregar(new Habilidad("Oracle", false));
-        tecBaseDatos.agregar(new Habilidad("PostgreSQL", false));
-        tecBaseDatos.agregar(new Habilidad("SQL Server", false));
-        tecBaseDatos.agregar(new Habilidad("Modelado de datos", false));
+        tecBaseDatos.agregar(new Habilidad("MongoDB", false));
+        tecBaseDatos.agregar(new Habilidad("DynamoDB", false));
 
-        Categoria tecRedes = new Categoria("Redes");
-        tecRedes.agregar(new Habilidad("TCP/IP", false));
-        tecRedes.agregar(new Habilidad("Cisco", false));
-        tecRedes.agregar(new Habilidad("Routing", false));
-        tecRedes.agregar(new Habilidad("Switching", false));
-        tecRedes.agregar(new Habilidad("Administracion de redes", false));
+        Arbol_Categoria tecIA = new Arbol_Categoria("Inteligencia Artificial");
+        tecIA.agregar(new Habilidad("Machine Learning", false));
+        tecIA.agregar(new Habilidad("Deep Learning", false));
+        tecIA.agregar(new Habilidad("NLP", false));
+        tecIA.agregar(new Habilidad("Vision Computacional", false));
 
-        Categoria tecCiberseguridad = new Categoria("Ciberseguridad");
-        tecCiberseguridad.agregar(new Habilidad("Seguridad informatica", false));
-        tecCiberseguridad.agregar(new Habilidad("Analisis de vulnerabilidades", false));
-        tecCiberseguridad.agregar(new Habilidad("Pentesting", false));
-        tecCiberseguridad.agregar(new Habilidad("Firewalls", false));
+        Arbol_Categoria tecDevOps = new Arbol_Categoria("DevOps");
+        tecDevOps.agregar(new Habilidad("Docker", false));
+        tecDevOps.agregar(new Habilidad("Kubernetes", false));
+        tecDevOps.agregar(new Habilidad("AWS", false));
+        tecDevOps.agregar(new Habilidad("CI/CD", false));
 
-        Categoria tecSoporte = new Categoria("Soporte tecnico");
-        tecSoporte.agregar(new Habilidad("Soporte a usuario", false));
-        tecSoporte.agregar(new Habilidad("Windows", false));
-        tecSoporte.agregar(new Habilidad("Linux", false));
-        tecSoporte.agregar(new Habilidad("Hardware", false));
-        tecSoporte.agregar(new Habilidad("Mesa de ayuda", false));
-
-        Categoria tecIA = new Categoria("Inteligencia artificial");
-        tecIA.agregar(new Habilidad("Machine learning", false));
-        tecIA.agregar(new Habilidad("Deep learning", false));
-        tecIA.agregar(new Habilidad("Procesamiento de lenguaje natural", false));
-        tecIA.agregar(new Habilidad("Analisis de datos", false));
+        Arbol_Categoria tecSistemasDistribuidos = new Arbol_Categoria("Sistemas Distribuidos");
+        tecSistemasDistribuidos.agregar(new Habilidad("Microservicios", false));
+        tecSistemasDistribuidos.agregar(new Habilidad("Message Queues", false));
+        tecSistemasDistribuidos.agregar(new Habilidad("Cache distribuido", false));
 
         tecnologia.agregar(tecDesarrollo);
         tecnologia.agregar(tecBaseDatos);
-        tecnologia.agregar(tecRedes);
-        tecnologia.agregar(tecCiberseguridad);
-        tecnologia.agregar(tecSoporte);
         tecnologia.agregar(tecIA);
+        tecnologia.agregar(tecDevOps);
+        tecnologia.agregar(tecSistemasDistribuidos);
         raiz.agregar(tecnologia);
 
         // ==========================================
-        // 2. MARKETING
+        // 2. DISEÑO
         // ==========================================
-        Categoria marketing = new Categoria("Marketing");
+        Arbol_Categoria diseno = new Arbol_Categoria("Diseno");
 
-        Categoria mktDigital = new Categoria("Marketing digital");
-        mktDigital.agregar(new Habilidad("Google Ads", false));
-        mktDigital.agregar(new Habilidad("Meta Ads", false));
-        mktDigital.agregar(new Habilidad("Email marketing", false));
+        Arbol_Categoria disGrafico = new Arbol_Categoria("Diseño grafico");
+        disGrafico.agregar(new Habilidad("Branding", false));
+        disGrafico.agregar(new Habilidad("Tipografia", false));
+        disGrafico.agregar(new Habilidad("Ilustracion digital", false));
 
-        Categoria mktPublicidad = new Categoria("Publicidad");
-        mktPublicidad.agregar(new Habilidad("Copywriting", false));
+        Arbol_Categoria disUX = new Arbol_Categoria("UX/UI");
+        disUX.agregar(new Habilidad("Wireframing", false));
+        disUX.agregar(new Habilidad("Prototyping", false));
+        disUX.agregar(new Habilidad("User Research", false));
 
-        Categoria mktSeo = new Categoria("SEO");
-        mktSeo.agregar(new Habilidad("SEO tecnico", false));
+        Arbol_Categoria dis3D = new Arbol_Categoria("Diseño 3D");
+        dis3D.agregar(new Habilidad("Modelado 3D", false));
+        dis3D.agregar(new Habilidad("Renderizado", false));
+        dis3D.agregar(new Habilidad("Animacion 3D", false));
 
-        Categoria mktRedes = new Categoria("Redes sociales");
-        mktRedes.agregar(new Habilidad("Community management", false));
-
-        Categoria mktBranding = new Categoria("Branding");
-        mktBranding.agregar(new Habilidad("Branding personal", false));
-
-        marketing.agregar(mktDigital);
-        marketing.agregar(mktPublicidad);
-        marketing.agregar(mktSeo);
-        marketing.agregar(mktRedes);
-        marketing.agregar(mktBranding);
-        raiz.agregar(marketing);
-
-        // ==========================================
-        // 3. DISENO
-        // ==========================================
-        Categoria diseno = new Categoria("Diseno");
-
-        Categoria disGrafico = new Categoria("Diseno grafico");
-        disGrafico.agregar(new Habilidad("Photoshop", false));
-        disGrafico.agregar(new Habilidad("Illustrator", false));
-
-        Categoria disUxUi = new Categoria("UX/UI");
-        disUxUi.agregar(new Habilidad("Figma", false));
-        disUxUi.agregar(new Habilidad("Prototipado", false));
-
-        Categoria disWeb = new Categoria("Diseno web");
-        disWeb.agregar(new Habilidad("Diseno responsive", false));
-
-        Categoria disIlustracion = new Categoria("Ilustracion");
-        disIlustracion.agregar(new Habilidad("Ilustracion digital", false));
-
-        Categoria disAnimacion = new Categoria("Animacion");
-        disAnimacion.agregar(new Habilidad("Animacion 2D", false));
+        Arbol_Categoria disWeb = new Arbol_Categoria("Diseño Web");
+        disWeb.agregar(new Habilidad("CSS", false));
+        disWeb.agregar(new Habilidad("Responsive Design", false));
+        disWeb.agregar(new Habilidad("Accesibilidad Web", false));
 
         diseno.agregar(disGrafico);
-        diseno.agregar(disUxUi);
+        diseno.agregar(disUX);
+        diseno.agregar(dis3D);
         diseno.agregar(disWeb);
-        diseno.agregar(disIlustracion);
-        diseno.agregar(disAnimacion);
         raiz.agregar(diseno);
 
         // ==========================================
-        // 4. NEGOCIOS
+        // 3. NEGOCIOS
         // ==========================================
-        Categoria negocios = new Categoria("Negocios");
+        Arbol_Categoria negocios = new Arbol_Categoria("Negocios");
 
-        Categoria negAdmin = new Categoria("Administracion");
-        negAdmin.agregar(new Habilidad("Gestion administrativa", false));
+        Arbol_Categoria negMarketing = new Arbol_Categoria("Marketing");
+        negMarketing.agregar(new Habilidad("Marketing Digital", false));
+        negMarketing.agregar(new Habilidad("Social Media", false));
+        negMarketing.agregar(new Habilidad("Analisis de datos", false));
 
-        Categoria negFinanzas = new Categoria("Finanzas");
+        Arbol_Categoria negVentas = new Arbol_Categoria("Ventas");
+        negVentas.agregar(new Habilidad("Prospecting", false));
+        negVentas.agregar(new Habilidad("Cierre de ventas", false));
+
+        Arbol_Categoria negFinanzas = new Arbol_Categoria("Finanzas");
         negFinanzas.agregar(new Habilidad("Analisis financiero", false));
+        negFinanzas.agregar(new Habilidad("Presupuestacion", false));
 
-        Categoria negContabilidad = new Categoria("Contabilidad");
-        negContabilidad.agregar(new Habilidad("Contabilidad general", false));
+        Arbol_Categoria negContabilidad = new Arbol_Categoria("Contabilidad");
+        negContabilidad.agregar(new Habilidad("Contabilidad General", false));
+        negContabilidad.agregar(new Habilidad("Impuestos", false));
 
-        Categoria negProject = new Categoria("Project management");
-        negProject.agregar(new Habilidad("Scrum", false));
-        negProject.agregar(new Habilidad("Kanban", false));
-        negProject.agregar(new Habilidad("Planificacion de proyectos", false));
+        Arbol_Categoria negProject = new Arbol_Categoria("Project Management");
+        negProject.agregar(new Habilidad("Metodologia Agile", false));
+        negProject.agregar(new Habilidad("SCRUM", false));
 
-        Categoria negRRHH = new Categoria("Recursos humanos");
-        negRRHH.agregar(new Habilidad("Seleccion de personal", false));
+        Arbol_Categoria negRRHH = new Arbol_Categoria("Recursos Humanos");
+        negRRHH.agregar(new Habilidad("Reclutamiento", false));
+        negRRHH.agregar(new Habilidad("Capacitacion", false));
 
-        Categoria negEmprendimiento = new Categoria("Emprendimiento");
-        negEmprendimiento.agregar(new Habilidad("Plan de negocios", false));
+        Arbol_Categoria negEmprendimiento = new Arbol_Categoria("Emprendimiento");
+        negEmprendimiento.agregar(new Habilidad("Business Model Canvas", false));
+        negEmprendimiento.agregar(new Habilidad("Pitch", false));
 
-        negocios.agregar(negAdmin);
+        negocios.agregar(negMarketing);
+        negocios.agregar(negVentas);
         negocios.agregar(negFinanzas);
         negocios.agregar(negContabilidad);
         negocios.agregar(negProject);
@@ -332,24 +305,24 @@ public class ProgramaPrincipal {
         raiz.agregar(negocios);
 
         // ==========================================
-        // 5. CIENCIAS JURIDICAS
+        // 4. CIENCIAS JURIDICAS
         // ==========================================
-        Categoria juridicas = new Categoria("Ciencias Juridicas");
+        Arbol_Categoria juridicas = new Arbol_Categoria("Ciencias Juridicas");
 
-        Categoria jurCivil = new Categoria("Derecho civil");
+        Arbol_Categoria jurCivil = new Arbol_Categoria("Derecho civil");
         jurCivil.agregar(new Habilidad("Contratos", false));
         jurCivil.agregar(new Habilidad("Derecho de familia", false));
 
-        Categoria jurPenal = new Categoria("Derecho penal");
+        Arbol_Categoria jurPenal = new Arbol_Categoria("Derecho penal");
         jurPenal.agregar(new Habilidad("Defensa penal", false));
 
-        Categoria jurLaboral = new Categoria("Derecho laboral");
+        Arbol_Categoria jurLaboral = new Arbol_Categoria("Derecho laboral");
         jurLaboral.agregar(new Habilidad("Liquidaciones laborales", false));
 
-        Categoria jurComercial = new Categoria("Derecho comercial");
+        Arbol_Categoria jurComercial = new Arbol_Categoria("Derecho comercial");
         jurComercial.agregar(new Habilidad("Sociedades comerciales", false));
 
-        Categoria jurInformatico = new Categoria("Derecho informatico");
+        Arbol_Categoria jurInformatico = new Arbol_Categoria("Derecho informatico");
         jurInformatico.agregar(new Habilidad("Proteccion de datos", false));
 
         juridicas.agregar(jurCivil);
@@ -360,23 +333,23 @@ public class ProgramaPrincipal {
         raiz.agregar(juridicas);
 
         // ==========================================
-        // 6. COMUNICACION
+        // 5. COMUNICACION
         // ==========================================
-        Categoria comunicacion = new Categoria("Comunicacion");
+        Arbol_Categoria comunicacion = new Arbol_Categoria("Comunicacion");
 
-        Categoria comPeriodismo = new Categoria("Periodismo");
+        Arbol_Categoria comPeriodismo = new Arbol_Categoria("Periodismo");
         comPeriodismo.agregar(new Habilidad("Redaccion periodistica", false));
 
-        Categoria comInstitucional = new Categoria("Comunicacion institucional");
+        Arbol_Categoria comInstitucional = new Arbol_Categoria("Comunicacion institucional");
         comInstitucional.agregar(new Habilidad("Comunicados institucionales", false));
 
-        Categoria comRedaccion = new Categoria("Redaccion");
+        Arbol_Categoria comRedaccion = new Arbol_Categoria("Redaccion");
         comRedaccion.agregar(new Habilidad("Redaccion creativa", false));
 
-        Categoria comAudiovisual = new Categoria("Produccion audiovisual");
+        Arbol_Categoria comAudiovisual = new Arbol_Categoria("Produccion audiovisual");
         comAudiovisual.agregar(new Habilidad("Edicion de video", false));
 
-        Categoria comRRPr = new Categoria("Relaciones publicas");
+        Arbol_Categoria comRRPr = new Arbol_Categoria("Relaciones publicas");
         comRRPr.agregar(new Habilidad("Prensa", false));
 
         comunicacion.agregar(comPeriodismo);
@@ -387,23 +360,23 @@ public class ProgramaPrincipal {
         raiz.agregar(comunicacion);
 
         // ==========================================
-        // 7. SALUD
+        // 6. SALUD
         // ==========================================
-        Categoria salud = new Categoria("Salud");
+        Arbol_Categoria salud = new Arbol_Categoria("Salud");
 
-        Categoria salMedicina = new Categoria("Medicina");
+        Arbol_Categoria salMedicina = new Arbol_Categoria("Medicina");
         salMedicina.agregar(new Habilidad("Atencion clinica", false));
 
-        Categoria salPsicologia = new Categoria("Psicologia");
+        Arbol_Categoria salPsicologia = new Arbol_Categoria("Psicologia");
         salPsicologia.agregar(new Habilidad("Terapia individual", false));
 
-        Categoria salNutricion = new Categoria("Nutricion");
+        Arbol_Categoria salNutricion = new Arbol_Categoria("Nutricion");
         salNutricion.agregar(new Habilidad("Plan nutricional", false));
 
-        Categoria salEnfermeria = new Categoria("Enfermeria");
+        Arbol_Categoria salEnfermeria = new Arbol_Categoria("Enfermeria");
         salEnfermeria.agregar(new Habilidad("Cuidados de enfermeria", false));
 
-        Categoria salKinesiologia = new Categoria("Kinesiologia");
+        Arbol_Categoria salKinesiologia = new Arbol_Categoria("Kinesiologia");
         salKinesiologia.agregar(new Habilidad("Rehabilitacion", false));
 
         salud.agregar(salMedicina);
@@ -414,23 +387,23 @@ public class ProgramaPrincipal {
         raiz.agregar(salud);
 
         // ==========================================
-        // 8. ENTRETENIMIENTO
+        // 7. ENTRETENIMIENTO
         // ==========================================
-        Categoria entretenimiento = new Categoria("Entretenimiento");
+        Arbol_Categoria entretenimiento = new Arbol_Categoria("Entretenimiento");
 
-        Categoria entMusica = new Categoria("Musica");
+        Arbol_Categoria entMusica = new Arbol_Categoria("Musica");
         entMusica.agregar(new Habilidad("Canto", false));
 
-        Categoria entCine = new Categoria("Cine");
+        Arbol_Categoria entCine = new Arbol_Categoria("Cine");
         entCine.agregar(new Habilidad("Guion", false));
 
-        Categoria entTeatro = new Categoria("Teatro");
+        Arbol_Categoria entTeatro = new Arbol_Categoria("Teatro");
         entTeatro.agregar(new Habilidad("Actuacion", false));
 
-        Categoria entVideojuegos = new Categoria("Videojuegos");
+        Arbol_Categoria entVideojuegos = new Arbol_Categoria("Videojuegos");
         entVideojuegos.agregar(new Habilidad("Game design", false));
 
-        Categoria entStreaming = new Categoria("Streaming");
+        Arbol_Categoria entStreaming = new Arbol_Categoria("Streaming");
         entStreaming.agregar(new Habilidad("Produccion de streaming", false));
 
         entretenimiento.agregar(entMusica);
@@ -441,23 +414,23 @@ public class ProgramaPrincipal {
         raiz.agregar(entretenimiento);
 
         // ==========================================
-        // 9. TURISMO
+        // 8. TURISMO
         // ==========================================
-        Categoria turismo = new Categoria("Turismo");
+        Arbol_Categoria turismo = new Arbol_Categoria("Turismo");
 
-        Categoria turHoteleria = new Categoria("Hoteleria");
+        Arbol_Categoria turHoteleria = new Arbol_Categoria("Hoteleria");
         turHoteleria.agregar(new Habilidad("Recepcion hotelera", false));
 
-        Categoria turGuia = new Categoria("Guia turistico");
+        Arbol_Categoria turGuia = new Arbol_Categoria("Guia turistico");
         turGuia.agregar(new Habilidad("Guia de turismo", false));
 
-        Categoria turAgencia = new Categoria("Agencia de viajes");
+        Arbol_Categoria turAgencia = new Arbol_Categoria("Agencia de viajes");
         turAgencia.agregar(new Habilidad("Armado de paquetes", false));
 
-        Categoria turGastronomia = new Categoria("Gastronomia");
+        Arbol_Categoria turGastronomia = new Arbol_Categoria("Gastronomia");
         turGastronomia.agregar(new Habilidad("Cocina", false));
 
-        Categoria turEventos = new Categoria("Eventos");
+        Arbol_Categoria turEventos = new Arbol_Categoria("Eventos");
         turEventos.agregar(new Habilidad("Organizacion de eventos", false));
 
         turismo.agregar(turHoteleria);
@@ -468,11 +441,11 @@ public class ProgramaPrincipal {
         raiz.agregar(turismo);
 
         // ==========================================
-        // 10. OTROS
+        // 9. OTROS
         // ==========================================
-        Categoria otros = new Categoria("Otros");
+        Arbol_Categoria otros = new Arbol_Categoria("Otros");
 
-        Categoria otrSub = new Categoria("Otros");
+        Arbol_Categoria otrSub = new Arbol_Categoria("Otros");
         otrSub.agregar(new Habilidad("Oficios", false));
         otrSub.agregar(new Habilidad("Capacitacion", false));
 
@@ -486,11 +459,11 @@ public class ProgramaPrincipal {
         Componente[] especialidades = raiz.getHijos();
 
         for (int i = 0; i < especialidades.length; i++) {
-            Categoria especialidad = (Categoria) especialidades[i];
+            Arbol_Categoria especialidad = (Arbol_Categoria) especialidades[i];
             Componente[] subespecialidades = especialidad.getHijos();
 
             for (int j = 0; j < subespecialidades.length; j++) {
-                Categoria sub = (Categoria) subespecialidades[j];
+                Arbol_Categoria sub = (Arbol_Categoria) subespecialidades[j];
 
                 // Le agregamos a cada subespecialidad todas las habilidades blandas
                 for (int k = 0; k < habilidadesBlandas.length; k++) {

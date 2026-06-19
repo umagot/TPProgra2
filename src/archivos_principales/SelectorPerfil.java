@@ -1,4 +1,5 @@
 package archivos_principales;
+import Implementaciones.Arbol_Categoria;
 import Interfaces.Componente;
 
 public class SelectorPerfil {
@@ -51,7 +52,7 @@ public class SelectorPerfil {
         return numero;
     }
 
-    public static Perfil cargarPerfil(java.util.Scanner scanner, Categoria catalogoRaiz) {
+    public static Perfil cargarPerfil(java.util.Scanner scanner, Arbol_Categoria catalogoRaiz) {
 
         // 1. ELEGIR ESPECIALIDAD (Nivel 1 del árbol)
         System.out.println("\nSeleccione una especialidad:");
@@ -63,7 +64,7 @@ public class SelectorPerfil {
         int opcEsp = leerEnteroEnRango(scanner, "Opcion: ", 1, especialidades.length);
 
         // Hacemos un "cast" seguro porque sabemos que el nivel 1 contiene Categorías
-        Categoria especialidadElegida = (Categoria) especialidades[opcEsp - 1];
+        Arbol_Categoria especialidadElegida = (Arbol_Categoria) especialidades[opcEsp - 1];
 
         // 2. ELEGIR SUBESPECIALIDAD (Nivel 2 del árbol)
         System.out.println("\nSeleccione una subespecialidad para " + especialidadElegida.getNombre() + ":");
@@ -73,7 +74,7 @@ public class SelectorPerfil {
             System.out.println((i + 1) + ". " + subespecialidades[i].getNombre());
         }
         int opcSub = leerEnteroEnRango(scanner, "Opcion: ", 1, subespecialidades.length);
-        Categoria subespecialidadElegida = (Categoria) subespecialidades[opcSub - 1];
+        Arbol_Categoria subespecialidadElegida = (Arbol_Categoria) subespecialidades[opcSub - 1];
 
         // 3. ELEGIR HABILIDADES (Nivel 3 del árbol - Hojas)
         System.out.println("\nHabilidades disponibles para " + subespecialidadElegida.getNombre() + ":");
