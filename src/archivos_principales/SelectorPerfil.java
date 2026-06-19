@@ -67,15 +67,20 @@ public class SelectorPerfil {
         Arbol_Categoria especialidadElegida = (Arbol_Categoria) especialidades[opcEsp - 1];
 
         // 2. ELEGIR SUBESPECIALIDAD (Nivel 2 del árbol)
-        System.out.println("\nSeleccione una subespecialidad para " + especialidadElegida.getNombre() + ":");
+        Arbol_Categoria subespecialidadElegida;
         Componente[] subespecialidades = especialidadElegida.getHijos();
 
-        for (int i = 0; i < subespecialidades.length-1; i++) {
-            System.out.println((i + 1) + ". " + subespecialidades[i].getNombre());
+        // === SI ELIGE LA OPCIÓN 9 O SE LLAMA "Otros", SALTEA LA UI ===
+        if (opcEsp == 9 || especialidadElegida.getNombre().equalsIgnoreCase("Otros")) {
+            subespecialidadElegida = (Arbol_Categoria) subespecialidades[0];
+        } else {
+            System.out.println("\nSeleccione una subespecialidad para " + especialidadElegida.getNombre() + ":");
+            for (int i = 0; i < subespecialidades.length; i++) {
+                System.out.println((i + 1) + ". " + subespecialidades[i].getNombre());
+            }
+            int opcSub = leerEnteroEnRango(scanner, "Opcion: ", 1, subespecialidades.length);
+            subespecialidadElegida = (Arbol_Categoria) subespecialidades[opcSub - 1];
         }
-
-        int opcSub = leerEnteroEnRango(scanner, "Opcion: ", 1, subespecialidades.length);
-        Arbol_Categoria subespecialidadElegida = (Arbol_Categoria) subespecialidades[opcSub - 1];
 
         // 3. ELEGIR HABILIDADES (Nivel 3 del árbol - Hojas)
         System.out.println("\nHabilidades disponibles para " + subespecialidadElegida.getNombre() + ":");

@@ -31,11 +31,11 @@ public class GestorPerfil {
 
         int id;
         while (true) {
-            id = SelectorPerfil.leerEntero(scanner, "Ingrese numero de dni: ");
+            id = SelectorPerfil.leerEntero(scanner, "Ingrese numero de DNI: ");
 
             // Verificamos en la plataforma si ya existe
             if (plataforma.buscar(id) != null) {
-                System.out.println("-> Error: El ID " + id + " ya esta registrado. Intente con otro.");
+                System.out.println("-> Error: El DNI " + id + " ya esta registrado. Intente con otro.");
             } else {
                 break; // El ID está libre, salimos del bucle
             }
