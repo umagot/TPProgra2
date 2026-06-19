@@ -1,4 +1,5 @@
 package archivos_principales;
+import Interfaces.Componente;
 
 public class SelectorPerfil {
 
@@ -50,68 +51,42 @@ public class SelectorPerfil {
         return numero;
     }
 
-    public static Especialidad elegirEspecialidad(java.util.Scanner scanner) {
-        Especialidad[] especialidades = Especialidad.values();
+    public static Perfil cargarPerfil(java.util.Scanner scanner, Categoria catalogoRaiz) {
 
+        // 1. ELEGIR ESPECIALIDAD (Nivel 1 del árbol)
         System.out.println("\nSeleccione una especialidad:");
+        Componente[] especialidades = catalogoRaiz.getHijos();
 
         for (int i = 0; i < especialidades.length; i++) {
-            System.out.println((i + 1) + ". " + especialidades[i]);
+            System.out.println((i + 1) + ". " + especialidades[i].getNombre());
         }
+        int opcEsp = leerEnteroEnRango(scanner, "Opcion: ", 1, especialidades.length);
 
-        int opcion = leerEnteroEnRango(scanner, "Opcion: ", 1, especialidades.length);
+        // Hacemos un "cast" seguro porque sabemos que el nivel 1 contiene Categorías
+        Categoria especialidadElegida = (Categoria) especialidades[opcEsp - 1];
 
-        return especialidades[opcion - 1];
-    }
+        // 2. ELEGIR SUBESPECIALIDAD (Nivel 2 del árbol)
+        System.out.println("\nSeleccione una subespecialidad para " + especialidadElegida.getNombre() + ":");
+        Componente[] subespecialidades = especialidadElegida.getHijos();
 
-    public static Subespecialidad elegirSubespecialidad(java.util.Scanner scanner, Especialidad especialidad) {
-        Subespecialidad[] todas = Subespecialidad.values();
-        Subespecialidad[] filtradas = new Subespecialidad[todas.length];
-
-        int cantidad = 0;
-
-        for (int i = 0; i < todas.length; i++) {
-            if (todas[i].getEspecialidad() == especialidad) {
-                filtradas[cantidad] = todas[i];
-                cantidad++;
-            }
+        for (int i = 0; i < subespecialidades.length; i++) {
+            System.out.println((i + 1) + ". " + subespecialidades[i].getNombre());
         }
+        int opcSub = leerEnteroEnRango(scanner, "Opcion: ", 1, subespecialidades.length);
+        Categoria subespecialidadElegida = (Categoria) subespecialidades[opcSub - 1];
 
-        System.out.println("\nSeleccione una subespecialidad para " + especialidad + ":");
+        // 3. ELEGIR HABILIDADES (Nivel 3 del árbol - Hojas)
+        System.out.println("\nHabilidades disponibles para " + subespecialidadElegida.getNombre() + ":");
+        Componente[] habilidadesDisponibles = subespecialidadElegida.getHijos();
 
-        for (int i = 0; i < cantidad; i++) {
-            System.out.println((i + 1) + ". " + filtradas[i]);
+        for (int i = 0; i < habilidadesDisponibles.length; i++) {
+            System.out.println((i + 1) + ". " + habilidadesDisponibles[i].getNombre());
         }
-
-        int opcion = leerEnteroEnRango(scanner, "Opcion: ", 1, cantidad);
-
-        return filtradas[opcion - 1];
-    }
-
-    public static Habilidades[] elegirHabilidades(java.util.Scanner scanner, Subespecialidad subespecialidad) {
-        Habilidades[] todas = Habilidades.values();
-        Habilidades[] disponibles = new Habilidades[todas.length];
-
-        int cantidadDisponibles = 0;
-
-        for (int i = 0; i < todas.length; i++) {
-            if (todas[i].perteneceA(subespecialidad)) {
-                disponibles[cantidadDisponibles] = todas[i];
-                cantidadDisponibles++;
-            }
-        }
-
-        System.out.println("\nHabilidades disponibles para " + subespecialidad + ":");
-
-        for (int i = 0; i < cantidadDisponibles; i++) {
-            System.out.println((i + 1) + ". " + disponibles[i]);
-        }
-
         System.out.println("-1. Finalizar carga de habilidades");
 
-        Habilidades[] seleccionadasTemporal = new Habilidades[cantidadDisponibles];
+        // Lógica manual de arreglos para selección múltiple
+        Habilidad[] seleccionadasTemporal = new Habilidad[habilidadesDisponibles.length];
         int cantidadSeleccionadas = 0;
-
         int opcion;
 
         do {
@@ -119,69 +94,39 @@ public class SelectorPerfil {
                     scanner,
                     "Seleccione una habilidad o -1 para finalizar: ",
                     -1,
-                    cantidadDisponibles
+                    habilidadesDisponibles.length
             );
 
             if (opcion != -1) {
-                Habilidades habilidadElegida = disponibles[opcion - 1];
+                Habilidad habilidadElegida = (Habilidad) habilidadesDisponibles[opcion - 1];
 
                 if (yaFueElegida(seleccionadasTemporal, cantidadSeleccionadas, habilidadElegida)) {
                     System.out.println("Esa habilidad ya fue seleccionada.");
                 } else {
                     seleccionadasTemporal[cantidadSeleccionadas] = habilidadElegida;
                     cantidadSeleccionadas++;
-                    System.out.println("Habilidad agregada: " + habilidadElegida);
+                    System.out.println("Habilidad agregada: " + habilidadElegida.getNombre());
                 }
             }
 
-        } while (opcion != -1 && cantidadSeleccionadas < cantidadDisponibles);
+        } while (opcion != -1 && cantidadSeleccionadas < habilidadesDisponibles.length);
 
-        Habilidades[] habilidadesElegidas = new Habilidades[cantidadSeleccionadas];
-
+        // Ajustamos el arreglo al tamaño exacto de las seleccionadas
+        Habilidad[] habilidadesElegidas = new Habilidad[cantidadSeleccionadas];
         for (int i = 0; i < cantidadSeleccionadas; i++) {
             habilidadesElegidas[i] = seleccionadasTemporal[i];
         }
 
-        return habilidadesElegidas;
+        return new Perfil(especialidadElegida, subespecialidadElegida, habilidadesElegidas);
     }
 
-    private static boolean yaFueElegida(
-            Habilidades[] seleccionadas,
-            int cantidadSeleccionadas,
-            Habilidades habilidad
-    ) {
+    private static boolean yaFueElegida(Habilidad[] seleccionadas, int cantidadSeleccionadas, Habilidad habilidad) {
         for (int i = 0; i < cantidadSeleccionadas; i++) {
+            // Comparamos por referencia de memoria, es suficiente en este caso
             if (seleccionadas[i] == habilidad) {
                 return true;
             }
         }
-
         return false;
-    }
-
-    public static Perfil cargarPerfil(java.util.Scanner scanner) {
-        Especialidad especialidad = elegirEspecialidad(scanner);
-        Subespecialidad subespecialidad = elegirSubespecialidad(scanner, especialidad);
-        Habilidades[] habilidades = elegirHabilidades(scanner, subespecialidad);
-
-        return new Perfil(especialidad, subespecialidad, habilidades);
-    }
-
-    public static Perfil[] cargarPerfiles(java.util.Scanner scanner) {
-        int cantidad = leerEnteroEnRango(
-                scanner,
-                "\nCuantos perfiles desea cargar?: ",
-                1,
-                10
-        );
-
-        Perfil[] perfiles = new Perfil[cantidad];
-
-        for (int i = 0; i < cantidad; i++) {
-            System.out.println("\nCarga del perfil " + (i + 1) + ":");
-            perfiles[i] = cargarPerfil(scanner);
-        }
-
-        return perfiles;
     }
 }

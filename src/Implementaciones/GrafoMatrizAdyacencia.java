@@ -173,7 +173,7 @@ public class GrafoMatrizAdyacencia implements IGrafo {
         int[] niveles = calcularNivelesBFS(usuario);
         if (niveles == null) return;
 
-        System.out.println("Niveles de conexión para " + usuario + " (BFS):");
+        System.out.println("Niveles de conexión para " + usuario );
         for (int i = 0; i < cantidad; i++) {
             if (niveles[i] > 0) {
                 System.out.println(" - Nivel " + niveles[i] + " (" + getNivelDesc(niveles[i]) + "): " + vertices[i]);
