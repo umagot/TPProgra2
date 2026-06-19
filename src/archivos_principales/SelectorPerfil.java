@@ -70,9 +70,10 @@ public class SelectorPerfil {
         System.out.println("\nSeleccione una subespecialidad para " + especialidadElegida.getNombre() + ":");
         Componente[] subespecialidades = especialidadElegida.getHijos();
 
-        for (int i = 0; i < subespecialidades.length; i++) {
+        for (int i = 0; i < subespecialidades.length-1; i++) {
             System.out.println((i + 1) + ". " + subespecialidades[i].getNombre());
         }
+
         int opcSub = leerEnteroEnRango(scanner, "Opcion: ", 1, subespecialidades.length);
         Arbol_Categoria subespecialidadElegida = (Arbol_Categoria) subespecialidades[opcSub - 1];
 
@@ -98,7 +99,11 @@ public class SelectorPerfil {
                     habilidadesDisponibles.length
             );
 
-            if (opcion != -1) {
+            if (opcion == 0) {
+                System.out.println(" Numero invalido. Intente nuevamente.");
+            }
+
+            else if (opcion != -1) {
                 Habilidad habilidadElegida = (Habilidad) habilidadesDisponibles[opcion - 1];
 
                 if (yaFueElegida(seleccionadasTemporal, cantidadSeleccionadas, habilidadElegida)) {

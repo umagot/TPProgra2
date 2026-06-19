@@ -2,24 +2,15 @@ package archivos_principales;
 
 import Implementaciones.Arbol_Categoria;
 import Interfaces.Componente;
-
-/**
- * BuscadorPerfilesUI: Interfaz de usuario para búsquedas de perfiles.
- * Maneja la interacción con el usuario para seleccionar filtros de búsqueda.
- */
 public class BuscadorPerfilesUI {
 
-    /**
-     * Menú principal de búsqueda.
-     * Permite al usuario seleccionar qué criterios quiere usar para filtrar.
-     */
     public static void menuBuscar(
             java.util.Scanner scanner,
             DiccionarioUsuarios plataforma,
             Arbol_Categoria catalogoRaiz) {
 
         if (plataforma.getCantidadElementos() == 0) {
-            System.out.println("\n❌ No hay usuarios registrados en la plataforma.");
+            System.out.println("\n No hay usuarios registrados en la plataforma.");
             return;
         }
 
@@ -72,9 +63,7 @@ public class BuscadorPerfilesUI {
         realizarBusqueda(plataforma, especialidad, subespecialidad, habilidad);
     }
 
-    /**
-     * Selecciona una especialidad del árbol de forma interactiva
-     */
+
     private static String seleccionarEspecialidad(java.util.Scanner scanner, Arbol_Categoria catalogoRaiz) {
         System.out.println("\nSeleccione una especialidad:");
         Componente[] especialidades = catalogoRaiz.getHijos();
@@ -121,9 +110,6 @@ public class BuscadorPerfilesUI {
         return subespecialidades[opcion - 1].getNombre();
     }
 
-    /**
-     * Selecciona una habilidad según especialidad y subespecialidad
-     */
     private static String seleccionarHabilidad(
             java.util.Scanner scanner,
             Arbol_Categoria catalogoRaiz,

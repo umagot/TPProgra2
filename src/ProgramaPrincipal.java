@@ -50,9 +50,8 @@ public class ProgramaPrincipal {
                     break;
 
                 case 2:
-                    // Demuestra el O(1): Busca sin iterar
                     System.out.println("\n--- BUSCAR USUARIO ---");
-                    int idBuscar = SelectorPerfil.leerEntero(scanner, "Ingrese el ID a buscar: ");
+                    int idBuscar = SelectorPerfil.leerEntero(scanner, "Ingrese el dni a buscar: ");
                     Usuario encontrado = plataforma.buscar(idBuscar);
 
                     if (encontrado != null) {

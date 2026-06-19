@@ -2,19 +2,7 @@ package archivos_principales;
 
 import Implementaciones.Arbol_Categoria;
 
-/**
- * BuscadorPerfiles: Módulo de búsqueda avanzada de usuarios.
- * 
- * Permite buscar usuarios según criterios:
- * - Especialidad (opcional)
- * - Subespecialidad (opcional)
- * - Habilidad específica (opcional)
- * 
- * La búsqueda es exacta pero case-insensitive.
- * Ejemplo: buscar "java" encontrará "Java" pero no "JavaScript"
- * 
- * Complejidad: O(n * m) donde n = cantidad de usuarios, m = cantidad de habilidades
- */
+
 public class BuscadorPerfiles {
 
     /**
@@ -37,32 +25,26 @@ public class BuscadorPerfiles {
             return new Usuario[0];
         }
 
-        // Normalizamos los filtros a lowercase para comparación case-insensitive
+
         String espNorm = nombreEspecialidad != null ? nombreEspecialidad.toLowerCase().trim() : null;
         String subNorm = nombreSubespecialidad != null ? nombreSubespecialidad.toLowerCase().trim() : null;
         String habNorm = nombreHabilidad != null ? nombreHabilidad.toLowerCase().trim() : null;
 
-        // Arreglo temporal para almacenar resultados
+
         Usuario[] resultados = new Usuario[usuarios.length];
         int cantidadResultados = 0;
 
-        // Iteramos sobre cada usuario
         for (int i = 0; i < usuarios.length; i++) {
             Usuario usuario = usuarios[i];
-
-            // Saltamos usuarios sin perfil
             if (usuario.getPerfil() == null) {
                 continue;
             }
-
-            // Verificamos si coincide con todos los filtros
             if (cumpleConjuntoFiltros(usuario, espNorm, subNorm, habNorm)) {
                 resultados[cantidadResultados] = usuario;
                 cantidadResultados++;
             }
         }
 
-        // Retornamos array exacto del tamaño de resultados
         Usuario[] resultadosFinal = new Usuario[cantidadResultados];
         for (int i = 0; i < cantidadResultados; i++) {
             resultadosFinal[i] = resultados[i];
@@ -71,10 +53,6 @@ public class BuscadorPerfiles {
         return resultadosFinal;
     }
 
-    /**
-     * Verifica si un usuario cumple con TODOS los filtros proporcionados.
-     * Solo se verifica un filtro si está presente (no null).
-     */
     private static boolean cumpleConjuntoFiltros(
             Usuario usuario,
             String especialidadNorm,
@@ -110,13 +88,10 @@ public class BuscadorPerfiles {
             }
         }
 
-        // Si llegamos aquí, el usuario cumple con todos los filtros
         return true;
     }
 
-    /**
-     * Verifica si un perfil contiene una habilidad específica (búsqueda exacta, case-insensitive).
-     */
+
     private static boolean tieneHabilidad(Perfil perfil, String habilidadNorm) {
         Habilidad[] habilidades = perfil.getHabilidades();
 
@@ -133,20 +108,18 @@ public class BuscadorPerfiles {
         return false;
     }
 
-    /**
-     * Imprime los resultados de búsqueda de forma legible
-     */
+
     public static void imprimirResultados(Usuario[] usuarios, String nombreBusqueda) {
         System.out.println("\n========================================");
         System.out.println("   RESULTADOS DE BÚSQUEDA: " + nombreBusqueda);
         System.out.println("========================================");
 
         if (usuarios == null || usuarios.length == 0) {
-            System.out.println("❌ No se encontraron usuarios que coincidan con los criterios.");
+            System.out.println("No se encontraron usuarios que coincidan con los criterios.");
             return;
         }
 
-        System.out.println("✅ Se encontraron " + usuarios.length + " usuario(s):\n");
+        System.out.println("Se encontraron " + usuarios.length + " usuario(s):\n");
 
         for (int i = 0; i < usuarios.length; i++) {
             System.out.println((i + 1) + ". " + usuarios[i]);

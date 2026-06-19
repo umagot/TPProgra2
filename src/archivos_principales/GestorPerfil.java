@@ -17,12 +17,21 @@ public class GestorPerfil {
     public Usuario completarUsuario(java.util.Scanner scanner, DiccionarioUsuarios plataforma) {
         System.out.println("\n--- COMPLETAR USUARIO ---");
 
-        String nombre = SelectorPerfil.leerTexto(scanner, "Ingrese nombre: ");
+        String nombre;
+        boolean tieneNumeros;
+
+        do {
+            nombre = SelectorPerfil.leerTexto(scanner, "Ingrese nombre: ");
+            tieneNumeros = nombre.matches(".*\\d.*");
+            if (tieneNumeros) {
+                System.out.println("El nombre no puede contener numeros. Intente nuevamente.");
+            }
+
+        } while (tieneNumeros);
 
         int id;
-        // Bucle infinito que solo se rompe si el ID es válido
         while (true) {
-            id = SelectorPerfil.leerEntero(scanner, "Ingrese id: ");
+            id = SelectorPerfil.leerEntero(scanner, "Ingrese numero de dni: ");
 
             // Verificamos en la plataforma si ya existe
             if (plataforma.buscar(id) != null) {

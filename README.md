@@ -6,7 +6,9 @@ Alternativa elegida: A - Ecosistema de Red Social Profesional
 
 Estructuras de datos utilizadas: Hasta la segunda entrega: diccionarios, grafos (matriz de adyacencias), listas enlazadas y pilas. Luego implementaremos arboles y colas para las siguientes funcionalidades.
 
-Funcionalidades implementadas en esta segunda etapa: Identificación inmediata, Red de Contactos, Historial de cambios y Jerarquía de habilidades (esta última parcialmente implementada) 
+Funcionalidades implementadas en la segunda etapa: Identificación inmediata, Red de Contactos, Historial de cambios y Jerarquía de habilidades (esta última parcialmente implementada) 
+
+Funcionalidades implementadas en la tercera etapa:Terminamos la jerarquia de habilidades, Gestion de postulacion y validaciones
 
 Link del repositorio: https://github.com/umagot/TPProgra2
 

@@ -20,7 +20,7 @@ public class Perfil {
         this.habilidades = copiarHabilidades(otro.habilidades);
     }
 
-    // Tu método original, excelente para evitar mutaciones externas
+
     private Habilidad[] copiarHabilidades(Habilidad[] origen) {
         if (origen == null) {
             return null;
