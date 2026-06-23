@@ -1,5 +1,5 @@
 
-package Implementaciones;
+package TDA;
 import Interfaces.Componente;
 
 public class Arbol_Categoria implements Componente {

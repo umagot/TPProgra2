@@ -1,6 +1,12 @@
 import Interfaces.*;
-import Implementaciones.*;
-import archivos_principales.*;
+import TDA.Arbol_Categoria;
+import TDA.DiccionarioUsuarios;
+import TDA.GrafoMatrizAdyacencia;
+import controller.GestorPerfil;
+import controller.GestorPostulaciones;
+import model.*;
+import view.BuscadorPerfilesUI;
+import view.SelectorPerfil;
 
 import java.util.Scanner;
 

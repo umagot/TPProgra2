@@ -1,4 +1,4 @@
-package archivos_principales;
+package model;
 
 public class Usuario implements Comparable<Usuario> {
 

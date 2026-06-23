@@ -1,6 +1,6 @@
-package archivos_principales;
+package model;
 
-import Implementaciones.Arbol_Categoria;
+import TDA.Arbol_Categoria;
 
 public class Perfil {
 

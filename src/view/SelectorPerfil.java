@@ -1,6 +1,8 @@
-package archivos_principales;
-import Implementaciones.Arbol_Categoria;
+package view;
+import TDA.Arbol_Categoria;
 import Interfaces.Componente;
+import model.Habilidad;
+import model.Perfil;
 
 public class SelectorPerfil {
 

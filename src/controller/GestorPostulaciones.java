@@ -1,6 +1,9 @@
-package archivos_principales;
+package controller;
 
-import Implementaciones.Cola;
+import TDA.Cola;
+import model.SolicitudEmpleo;
+import model.Usuario;
+import view.SelectorPerfil;
 
 public class GestorPostulaciones {
     private Cola<SolicitudEmpleo> colaDeEspera;

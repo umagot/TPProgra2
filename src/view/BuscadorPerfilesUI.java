@@ -1,8 +1,11 @@
-package archivos_principales;
+package view;
 
-import Implementaciones.Arbol_Categoria;
-import Implementaciones.DiccionarioUsuarios;
+import TDA.Arbol_Categoria;
+import TDA.DiccionarioUsuarios;
 import Interfaces.Componente;
+import controller.BuscadorPerfiles;
+import model.Usuario;
+
 public class BuscadorPerfilesUI {
 
     public static void menuBuscar(

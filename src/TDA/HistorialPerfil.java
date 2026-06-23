@@ -1,11 +1,13 @@
-package archivos_principales;
+package TDA;
+
+import model.Usuario;
 
 public class HistorialPerfil {
 
-    private Implementaciones.Pila<Usuario> historial;
+    private Pila<Usuario> historial;
 
     public HistorialPerfil(int tamanoMaximo) {
-        historial = new Implementaciones.Pila<Usuario>(tamanoMaximo);
+        historial = new Pila<Usuario>(tamanoMaximo);
     }
 
     public boolean guardarEstado(Usuario usuario) {

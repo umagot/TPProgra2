@@ -1,5 +1,5 @@
 package Interfaces;
-import archivos_principales.Usuario;
+import model.Usuario;
 
 
 public interface IGrafo {

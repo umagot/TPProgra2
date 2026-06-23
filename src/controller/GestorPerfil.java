@@ -1,7 +1,11 @@
-package archivos_principales;
+package controller;
 
-import Implementaciones.Arbol_Categoria;
-import Implementaciones.DiccionarioUsuarios;
+import TDA.Arbol_Categoria;
+import TDA.DiccionarioUsuarios;
+import TDA.HistorialPerfil;
+import model.Perfil;
+import model.Usuario;
+import view.SelectorPerfil;
 
 public class GestorPerfil {
 

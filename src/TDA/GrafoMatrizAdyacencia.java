@@ -1,5 +1,5 @@
-package Implementaciones;
-import archivos_principales.Usuario;
+package TDA;
+import model.Usuario;
 import Interfaces.IGrafo;
 
 public class GrafoMatrizAdyacencia implements IGrafo {

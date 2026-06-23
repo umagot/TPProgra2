@@ -1,6 +1,6 @@
-package Implementaciones;
+package TDA;
 
-import archivos_principales.Usuario;
+import model.Usuario;
 
 public class DiccionarioUsuarios {
 

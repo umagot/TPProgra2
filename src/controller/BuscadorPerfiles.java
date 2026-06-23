@@ -1,6 +1,8 @@
-package archivos_principales;
+package controller;
 
-import Implementaciones.Arbol_Categoria;
+import model.Habilidad;
+import model.Perfil;
+import model.Usuario;
 
 
 public class BuscadorPerfiles {

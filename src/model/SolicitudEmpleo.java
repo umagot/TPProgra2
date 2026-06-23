@@ -1,4 +1,4 @@
-package archivos_principales;
+package model;
 
 import java.time.LocalDateTime;
 
