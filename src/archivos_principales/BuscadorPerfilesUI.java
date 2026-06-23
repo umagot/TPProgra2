@@ -1,6 +1,7 @@
 package archivos_principales;
 
 import Implementaciones.Arbol_Categoria;
+import Implementaciones.DiccionarioUsuarios;
 import Interfaces.Componente;
 public class BuscadorPerfilesUI {
 

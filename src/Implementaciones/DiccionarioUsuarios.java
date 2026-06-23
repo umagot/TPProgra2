@@ -1,4 +1,6 @@
-package archivos_principales;
+package Implementaciones;
+
+import archivos_principales.Usuario;
 
 public class DiccionarioUsuarios {
 
