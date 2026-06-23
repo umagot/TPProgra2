@@ -14,6 +14,9 @@ public class ProgramaPrincipal {
         DiccionarioUsuarios plataforma = new DiccionarioUsuarios(100);
         GestorPerfil gestorPerfil = new GestorPerfil(10, catalogoGeneral);
         GrafoMatrizAdyacencia redSocial = new GrafoMatrizAdyacencia(100, false);
+        GestorPostulaciones gestorPostulaciones = new GestorPostulaciones(50);
+
+        precargarUsuarios(plataforma, redSocial, catalogoGeneral);
 
         int opcion;
 
@@ -135,19 +138,59 @@ public class ProgramaPrincipal {
                     break;
                     
                 case 8:
-                    GestorPostulaciones gestor = new GestorPostulaciones(5);
+                    int subOpcion8;
+                    do {
+                        System.out.println("\n--- GESTIÓN DE POSTULACIONES ---");
+                        System.out.println("1. Ingresar nueva postulación");
+                        System.out.println("2. Ver próxima postulación en la fila");
+                        System.out.println("3. Evaluar (Aceptar/Rechazar) próxima postulación");
+                        System.out.println("0. Volver al menú principal");
 
-                    gestor.recibirSolicitud(new SolicitudEmpleo("Carlos Pérez", Postulacion.DEV_FULLSTACK));
-                    gestor.recibirSolicitud(new SolicitudEmpleo("Ana Gómez", Postulacion.UX_UI_DESIGNER));
-                    gestor.recibirSolicitud(new SolicitudEmpleo("Juan López", Postulacion.DATA_ENGINEER));
+                        subOpcion8 = SelectorPerfil.leerEnteroEnRango(scanner, "\nSeleccione una opción: ", 0, 3);
 
-                    System.out.println("\n--- Estado de la revisión ---");
-                    gestor.verProximaSolicitud();
+                        switch (subOpcion8) {
+                            case 1:
+                                System.out.println("\n-- Registrar Nueva Postulación --");
+                                int idCandidato = SelectorPerfil.leerEntero(scanner, "Ingrese el ID (DNI) del usuario registrado: ");
 
-                    gestor.procesarSiguienteSolicitud();
-                    gestor.procesarSiguienteSolicitud();
-                    gestor.recibirSolicitud(new SolicitudEmpleo("María Rodríguez", Postulacion.PROJECT_MANAGER));
-                    gestor.verProximaSolicitud();
+                                // Buscamos al usuario en la tabla hash de forma instantánea
+                                Usuario candidato = plataforma.buscar(idCandidato);
+
+                                if (candidato == null) {
+                                    System.out.println("❌ Error: No existe ningún usuario registrado con el ID " + idCandidato);
+                                    System.out.println("Debe crearlo primero en el menú principal.");
+                                } else if (candidato.getPerfil() == null) {
+                                    // Opcional: validar que tenga perfil antes de postularse
+                                    System.out.println("❌ Error: El usuario " + candidato.getNombre() + " todavía no tiene un perfil configurado.");
+                                    System.out.println("Vaya a 'Editar usuario' (Opción 3) para agregarle un perfil.");
+                                } else {
+                                    System.out.println("\n✅ Candidato encontrado: " + candidato.getNombre());
+                                    System.out.println("Seleccione el puesto al que se postula:");
+
+                                    Postulacion[] puestos = Postulacion.values();
+                                    for (int i = 0; i < puestos.length; i++) {
+                                        System.out.println((i + 1) + ". " + puestos[i].getNombrePuesto() + " - " + puestos[i].getEmpresa());
+                                    }
+
+                                    int puestoOpcion = SelectorPerfil.leerEnteroEnRango(scanner, "Opción: ", 1, puestos.length);
+                                    Postulacion puestoElegido = puestos[puestoOpcion - 1];
+
+                                    // Pasamos el objeto Usuario completo a la solicitud
+                                    gestorPostulaciones.recibirSolicitud(new SolicitudEmpleo(candidato, puestoElegido));
+                                }
+                                break;
+
+                            case 2:
+                                System.out.println("\n-- Próxima Postulación a Revisar --");
+                                gestorPostulaciones.verProximaSolicitud();
+                                break;
+
+                            case 3:
+                                System.out.println("\n-- Evaluar Postulación --");
+                                gestorPostulaciones.evaluarSiguienteSolicitud(scanner);
+                                break;
+                        }
+                    } while (subOpcion8 != 0);
                     break;
                     
                 case 9:
@@ -472,5 +515,90 @@ public class ProgramaPrincipal {
         }
 
         return raiz;
+    }
+
+    private static void precargarUsuarios(DiccionarioUsuarios plataforma, GrafoMatrizAdyacencia redSocial, Arbol_Categoria raiz) {
+        Componente[] especialidades = raiz.getHijos();
+
+        // 1. Buscamos las Especialidades principales en el árbol
+        Arbol_Categoria tecnologia = buscarCategoria(especialidades, "Tecnologia");
+        Arbol_Categoria diseno = buscarCategoria(especialidades, "Diseno");
+        Arbol_Categoria negocios = buscarCategoria(especialidades, "Negocios");
+
+        // --- USUARIO 1: Desarrollador (Tecnología > Desarrollo) ---
+        if (tecnologia != null) {
+            Arbol_Categoria desarrollo = buscarCategoria(tecnologia.getHijos(), "Desarrollo");
+            if (desarrollo != null) {
+                Habilidad hJava = buscarHabilidad(desarrollo, "Java");
+                Habilidad hPython = buscarHabilidad(desarrollo, "Python");
+                Habilidad hCom = buscarHabilidad(desarrollo, "Comunicacion"); // Inyectada automáticamente
+
+                Habilidad[] habsU1 = { hJava, hPython, hCom };
+                Perfil perfilU1 = new Perfil(tecnologia, desarrollo, habsU1);
+                Usuario u1 = new Usuario("Carlos Gómez", 1, "carlos@mail.com", perfilU1);
+
+                plataforma.insertar(u1);
+                redSocial.insertarVertice(u1);
+            }
+        }
+
+        // --- USUARIO 2: Diseñadora (Diseño > UX/UI) ---
+        if (diseno != null) {
+            Arbol_Categoria uxui = buscarCategoria(diseno.getHijos(), "UX/UI");
+            if (uxui != null) {
+                Habilidad hWire = buscarHabilidad(uxui, "Wireframing");
+                Habilidad hProto = buscarHabilidad(uxui, "Prototyping");
+                Habilidad hTeam = buscarHabilidad(uxui, "Trabajo en equipo");
+
+                Habilidad[] habsU2 = { hWire, hProto, hTeam };
+                Perfil perfilU2 = new Perfil(diseno, uxui, habsU2);
+                Usuario u2 = new Usuario("Marta Rodríguez", 2, "marta@mail.com", perfilU2);
+
+                plataforma.insertar(u2);
+                redSocial.insertarVertice(u2);
+            }
+        }
+
+        // --- USUARIO 3: Project Manager (Negocios > Project Management) ---
+        if (negocios != null) {
+            Arbol_Categoria pm = buscarCategoria(negocios.getHijos(), "Project Management");
+            if (pm != null) {
+                Habilidad hAgile = buscarHabilidad(pm, "Metodologia Agile");
+                Habilidad hScrum = buscarHabilidad(pm, "SCRUM");
+                Habilidad hLead = buscarHabilidad(pm, "Liderazgo");
+
+                Habilidad[] habsU3 = { hAgile, hScrum, hLead };
+                Perfil perfilU3 = new Perfil(negocios, pm, habsU3);
+                Usuario u3 = new Usuario("Esteban Pérez", 3, "esteban@mail.com", perfilU3);
+
+                plataforma.insertar(u3);
+                redSocial.insertarVertice(u3);
+            }
+        }
+
+        System.out.println("⚙️ [Sistema] Se han precargado 3 usuarios de prueba con perfiles configurados.");
+    }
+
+    // Busca un Arbol_Categoria por su nombre dentro de un arreglo de Componentes
+    private static Arbol_Categoria buscarCategoria(Componente[] componentes, String nombre) {
+        if (componentes == null) return null;
+        for (int i = 0; i < componentes.length; i++) {
+            if (componentes[i].getNombre().equalsIgnoreCase(nombre)) {
+                return (Arbol_Categoria) componentes[i];
+            }
+        }
+        return null;
+    }
+
+    // Busca una Habilidad por su nombre dentro de una subcategoría
+    private static Habilidad buscarHabilidad(Arbol_Categoria subcategoria, String nombre) {
+        if (subcategoria == null) return null;
+        Componente[] habilidades = subcategoria.getHijos();
+        for (int i = 0; i < habilidades.length; i++) {
+            if (habilidades[i].getNombre().equalsIgnoreCase(nombre)) {
+                return (Habilidad) habilidades[i];
+            }
+        }
+        return null;
     }
 }

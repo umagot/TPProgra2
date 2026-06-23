@@ -6,13 +6,13 @@ public class SolicitudEmpleo implements Comparable<SolicitudEmpleo> {
     private static int contadorId = 1;
 
     private final int idSolicitud;
-    private String nombrePostulante;
+    private Usuario postulante;
     private Postulacion puesto;
     private LocalDateTime fechaLlegada;
 
-    public SolicitudEmpleo(String nombrePostulante, Postulacion puesto) {
+    public SolicitudEmpleo(Usuario Postulante, Postulacion puesto) {
         this.idSolicitud = contadorId++;
-        this.nombrePostulante = nombrePostulante;
+        this.postulante = Postulante;
         this.puesto = puesto;
         this.fechaLlegada = LocalDateTime.now();
     }
@@ -21,8 +21,8 @@ public class SolicitudEmpleo implements Comparable<SolicitudEmpleo> {
         return idSolicitud;
     }
 
-    public String getNombrePostulante() {
-        return nombrePostulante;
+    public Usuario getPostulante() {
+        return postulante;
     }
 
     public Postulacion getPuesto() {
@@ -41,6 +41,5 @@ public class SolicitudEmpleo implements Comparable<SolicitudEmpleo> {
 
     @Override
     public String toString() {
-        return "[Solicitud #" + idSolicitud + "] " + nombrePostulante + " -> " + puesto.getNombrePuesto() + " en " + puesto.getEmpresa();
-    }
+        return "[Solicitud #" + idSolicitud + "] " + postulante.getNombre() + " -> " + puesto.getNombrePuesto() + " en " + puesto.getEmpresa();    }
 }
